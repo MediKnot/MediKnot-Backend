@@ -8,15 +8,14 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import com.hack.azure.mediknot.enums.Gender;
+
 import java.time.LocalDate;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class User {
-
-    enum Gender{
-        MALE, FEMALE, OTHERS
-    }
 
     @Id
     @GeneratedValue
@@ -33,8 +32,9 @@ public class User {
     private Address address;
 
     private String aadharNumber;
+    private String profileImageUrl;
 
-    public User(String name, String emailId, String phoneNumber, Gender gender, LocalDate dateOfBirth, Integer age, Address address, String aadharNumber) {
+    public User(String name, String emailId, String phoneNumber, Gender gender, LocalDate dateOfBirth, Integer age, Address address, String aadharNumber, String profileImageUrl) {
         this.name = name;
         this.emailId = emailId;
         this.phoneNumber = phoneNumber;
@@ -43,5 +43,6 @@ public class User {
         this.age = age;
         this.address = address;
         this.aadharNumber = aadharNumber;
+        this.profileImageUrl =profileImageUrl;
     }
 }
