@@ -1,7 +1,12 @@
 package com.hack.azure.mediknot.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
+@Getter
+@Setter
 public class Disease {
     private Integer id;
     private String name;

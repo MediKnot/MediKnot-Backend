@@ -4,12 +4,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.annotation.Generated;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
@@ -27,7 +26,7 @@ public class User {
     private String emailId;
     private String phoneNumber;
     private Gender gender;
-    private Date dateOfBirth;
+    private LocalDate dateOfBirth;
     private Integer age;
 
     @Embedded
@@ -35,7 +34,7 @@ public class User {
 
     private String aadharNumber;
 
-    public User(String name, String emailId, String phoneNumber, Gender gender, Date dateOfBirth, Integer age, Address address, String aadharNumber) {
+    public User(String name, String emailId, String phoneNumber, Gender gender, LocalDate dateOfBirth, Integer age, Address address, String aadharNumber) {
         this.name = name;
         this.emailId = emailId;
         this.phoneNumber = phoneNumber;
