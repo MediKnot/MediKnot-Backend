@@ -4,27 +4,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import com.hack.azure.mediknot.enums.Gender;
 
 import java.time.LocalDate;
 
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter @Setter @NoArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
     private String emailId;
     private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+
     private LocalDate dateOfBirth;
     private Integer age;
 

@@ -5,13 +5,26 @@ import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+
+@Entity
 @Getter
 @Setter
 public class Doctor extends User{
-    private List<String> specialization;	
+
+    @ElementCollection
+    private List<String> specialization;
+
+    @ElementCollection
     private List<String> degree;
-    private List<String> medicalCouncilAffilation;
+
+    @ElementCollection
+    private List<String> medicalCouncilAffiliation;
+
+    @ElementCollection
     private List<String> clinicName;
+
     private String registrationNumber;
     private Integer rating;
     private Integer yearOfExperience;

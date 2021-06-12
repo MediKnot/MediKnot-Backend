@@ -3,12 +3,21 @@ package com.hack.azure.mediknot.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
+@Entity
 @Getter
 @Setter
 public class Prescription {
-    private Date date;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+
+    private LocalDate date;
+
+    @ElementCollection
     private List<Dosage> dosageList;
 }
