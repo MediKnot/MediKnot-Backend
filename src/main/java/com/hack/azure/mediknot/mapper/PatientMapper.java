@@ -7,7 +7,7 @@ import com.hack.azure.mediknot.entity.MedicalEvent;
 import com.hack.azure.mediknot.entity.Patient;
 import org.mapstruct.Mapper;
 
-@Mapper( componentModel = "spring" )
+@Mapper( componentModel = "spring", uses = ReportMapper.class)
 public interface PatientMapper {
 
     Patient toEntity(PatientDto patientDto);

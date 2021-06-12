@@ -1,6 +1,5 @@
 package com.hack.azure.mediknot.service;
 
-public interface PatientService {
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.User;
 
