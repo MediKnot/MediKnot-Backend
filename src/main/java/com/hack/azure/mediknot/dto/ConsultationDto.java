@@ -10,7 +10,7 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConsultationDto {
     private Integer id;
-    private Doctor doctor;
+    private DoctorDto doctorDto;
 
     private Set<PrescriptionDto> prescriptionList;
 
