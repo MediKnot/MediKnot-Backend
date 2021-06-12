@@ -15,5 +15,5 @@ public class PrescriptionDto {
     private Integer id;
     private LocalDate date;
     private String prescriptionUrl;
-    private List<Dosage> dosageList;
+    private List<DosageDto> dosageList;
 }
