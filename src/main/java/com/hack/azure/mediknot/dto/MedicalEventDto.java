@@ -3,8 +3,8 @@ package com.hack.azure.mediknot.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hack.azure.mediknot.entity.Address;
+import com.hack.azure.mediknot.enums.MedicalEventType;
 import com.hack.azure.mediknot.entity.Consultation;
-import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Report;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,8 @@ import java.util.Set;
 public class MedicalEventDto {
 
     private Integer id;
-    private Patient patient;
+
+    private PatientDto patientDto;
 
     private LocalDate startDate;
     private LocalDate endDate;
