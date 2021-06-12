@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MedicalDto {
+public class MedicalEventDto {
 
     private Integer id;
     private Patient patient;
