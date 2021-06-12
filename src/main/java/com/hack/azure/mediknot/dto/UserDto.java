@@ -3,7 +3,6 @@ package com.hack.azure.mediknot.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hack.azure.mediknot.entity.Address;
-import com.hack.azure.mediknot.enums.Gender;
 import lombok.Getter;
 import lombok.Setter;
 

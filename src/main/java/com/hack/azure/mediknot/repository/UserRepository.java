@@ -8,4 +8,5 @@ public interface UserRepository extends CrudRepository<User, Integer>{
     public Boolean existsByEmailId(String emailId);
 
     public User findByEmailId(String emailId);
+
 }

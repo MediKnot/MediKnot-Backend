@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DosageDto {
-
     private MedicineDto medicine;
     private String reason;
     private Double amount;
