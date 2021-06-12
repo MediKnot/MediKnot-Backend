@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hack.azure.mediknot.entity.Address;
 import com.hack.azure.mediknot.enums.Gender;
 import lombok.Getter;
@@ -14,7 +15,10 @@ public class UserDto {
     private Integer id;
     private String name;
     private String emailId;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+
     private String phoneNumber;
     private Gender gender;
     private LocalDate dateOfBirth;

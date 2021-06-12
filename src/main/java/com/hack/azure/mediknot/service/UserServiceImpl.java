@@ -11,6 +11,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
+    //patient service
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -21,6 +22,8 @@ public class UserServiceImpl implements UserService{
         if(userRepository.existsByEmailId(user.getEmailId())){
             throw new UserException("User with emailId exists.", 409);
         }
-        return userRepository.save(user);
+        User createdUser = userRepository.save(user);
+        //creation of patient as well
+        return  createdUser;
     }
 }
