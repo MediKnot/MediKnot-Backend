@@ -5,16 +5,15 @@ import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class UserServiceImpl implements UserService{
 
     private UserRepository userRepository;
-    //patient service
+    private PatientService patientService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PatientService patientService) {
         this.userRepository = userRepository;
+        this.patientService = patientService;
     }
 
     @Override
@@ -22,8 +21,7 @@ public class UserServiceImpl implements UserService{
         if(userRepository.existsByEmailId(user.getEmailId())){
             throw new UserException("User with emailId exists.", 409);
         }
-        User createdUser = userRepository.save(user);
-        //creation of patient as well
+        User createdUser = patientService.createPatient(user);
         return  createdUser;
     }
 }

@@ -17,11 +17,7 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
-    public Doctor createDoctor(Doctor doctor) throws DoctorException{
-        if(doctorRepository.existsByRegistrationNumber(doctor.getEmailId())){
-            throw new DoctorException("Doctor with registration number exists.", 409);
-        }
-        Doctor createdDoctor = doctorRepository.save(doctor);
-        return  createdDoctor;
+    public Doctor getDoctorById(Integer id) {
+        return null;
     }
 }
