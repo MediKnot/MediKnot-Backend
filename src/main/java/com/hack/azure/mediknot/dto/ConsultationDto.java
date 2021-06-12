@@ -12,9 +12,9 @@ public class ConsultationDto {
     private Integer id;
     private DoctorDto doctorDto;
 
-    private Set<PrescriptionDto> prescriptionList;
+    private Set<PrescriptionDto> prescriptionsDto;
 
-    private List<TreatmentDto> treatmentList;
+    private List<TreatmentDto> treatmentsDto;
 
     private List<String> notes;
 

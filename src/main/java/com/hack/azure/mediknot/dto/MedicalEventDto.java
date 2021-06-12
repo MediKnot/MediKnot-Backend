@@ -3,9 +3,6 @@ package com.hack.azure.mediknot.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.hack.azure.mediknot.entity.Address;
-import com.hack.azure.mediknot.enums.MedicalEventType;
-import com.hack.azure.mediknot.entity.Consultation;
-import com.hack.azure.mediknot.entity.Report;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -31,8 +28,8 @@ public class MedicalEventDto {
 
     private String critical;
 
-    private Set<Consultation> consultationList;
+    private Set<ConsultationDto> consultationsDto;
 
-    private List<Report> reports;
+    private List<ReportDto> reportsDto;
 
 }
