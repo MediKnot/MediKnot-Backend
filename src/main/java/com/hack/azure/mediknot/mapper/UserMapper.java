@@ -4,13 +4,11 @@ import com.hack.azure.mediknot.dto.UserDto;
 import com.hack.azure.mediknot.entity.User;
 import org.mapstruct.Mapper;
 
-@Mapper(
-        componentModel = "spring"
-)
+@Mapper( componentModel = "spring" )
 public interface UserMapper {
 
-     public User userDtoToUser(UserDto userDTO);
+    User userDtoToUser(UserDto userDto);
 
-     public UserDto userToUserDto(User user);
+    UserDto userToUserDto(User user);
 
 }

@@ -18,6 +18,8 @@ public class Prescription {
 
     private LocalDate date;
 
+    private String prescriptionUrl;
+
     @ElementCollection
     private List<Dosage> dosageList;
 }
