@@ -20,4 +20,9 @@ public class DoctorServiceImpl implements DoctorService{
     public Doctor getDoctorById(Integer id) {
         return null;
     }
+
+    @Override
+    public Doctor createDoctor(Doctor doctor) {
+        return null;
+    }
 }

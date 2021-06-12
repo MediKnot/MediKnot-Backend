@@ -5,6 +5,7 @@ import com.hack.azure.mediknot.entity.User;
 import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.mapper.UserMapper;
 import com.hack.azure.mediknot.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,13 +27,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto){
+    public ResponseEntity<Object> createUser(@RequestBody UserDto userDto){
         try {
             User user = userMapper.toEntity(userDto);
             user = userService.createUser(user);
             return ResponseEntity.ok(userMapper.toDto(user));
         }catch (UserException e){
-            return ResponseEntity.status(e.getStatusCode())
+            return ResponseEntity.status(e.getStatusCode()).body(e.getMessage());
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 }
