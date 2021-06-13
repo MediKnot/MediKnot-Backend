@@ -25,13 +25,14 @@ public class MedicineController {
     @PostMapping
     public EntityModel<MedicineDto> addMedicine(@RequestBody MedicineDto medicineDto){
         Medicine medicine = medicineMapper.toEntity(medicineDto);
+        medicine = medicineService.addMedicine(medicine);
         return EntityModel.of(
-                medicineMapper.toDto(medicineService.addMedicine(medicine)),
+                medicineMapper.toDto(medicine),
                 linkTo(methodOn(MedicineController.class).getMedicine(medicine.getId())).withSelfRel()
         );
     }
 
-    @GetMapping("/{id]")
+    @GetMapping("/{id}")
     public EntityModel<MedicineDto> getMedicine(@PathVariable Integer id){
         return EntityModel.of(
                 medicineMapper.toDto(medicineService.getMedicine(id))

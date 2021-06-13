@@ -3,7 +3,9 @@ package com.hack.azure.mediknot.service;
 import com.hack.azure.mediknot.entity.Medicine;
 import com.hack.azure.mediknot.exception.MedicineException;
 import com.hack.azure.mediknot.repository.MedicineRepository;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MedicineServiceImpl implements MedicineService {
 
     private MedicineRepository medicineRepository;

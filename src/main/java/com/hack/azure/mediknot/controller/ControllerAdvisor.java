@@ -1,6 +1,8 @@
 package com.hack.azure.mediknot.controller;
 
+import com.hack.azure.mediknot.exception.DiseaseException;
 import com.hack.azure.mediknot.exception.DoctorException;
+import com.hack.azure.mediknot.exception.MedicineException;
 import com.hack.azure.mediknot.exception.PatientException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,6 +19,16 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(PatientException.class)
     public ResponseEntity<String> handleException(PatientException ex){
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DiseaseException.class)
+    public ResponseEntity<String> handleException(DiseaseException ex){
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(MedicineException.class)
+    public ResponseEntity<String> handleException(MedicineException ex){
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 

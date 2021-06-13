@@ -28,4 +28,5 @@ public class UserDto {
     private String aadharNumber;
     private String profileImageUrl;
 
+
 }
