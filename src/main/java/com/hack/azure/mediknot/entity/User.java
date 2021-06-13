@@ -10,8 +10,7 @@ import com.hack.azure.mediknot.enums.Gender;
 
 import java.time.LocalDate;
 
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
+@MappedSuperclass
 @Getter @Setter @NoArgsConstructor
 public class User {
 

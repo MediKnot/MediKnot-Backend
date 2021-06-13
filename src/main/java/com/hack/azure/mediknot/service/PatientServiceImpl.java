@@ -2,6 +2,7 @@ package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.User;
+import com.hack.azure.mediknot.exception.PatientException;
 import com.hack.azure.mediknot.repository.PatientRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient getPatientById(Integer id) {
-        return null;
+        return patientRepository.findById(id).orElseThrow(() -> new PatientException("Patient not found.", 404));
     }
 
     @Override
@@ -24,7 +25,10 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient createPatient(User patient) {
-        return null;
+    public Patient createPatient(Patient patient) throws PatientException {
+        if(patientRepository.existsByEmailId(patient.getEmailId())){
+            throw new PatientException("Patient with email id already exists", 409);
+        }
+        return patientRepository.save(patient);
     }
 }
