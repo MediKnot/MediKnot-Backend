@@ -27,9 +27,8 @@ public class DiseaseController {
         Disease disease = diseaseMapper.toEntity(diseaseDto);
         disease = diseaseService.addDisease(disease);
         return EntityModel.of(
-                diseaseMapper.toDto(disease)
-//                ,
-//                linkTo(methodOn(DiseaseController.class).getDisease(disease.getId())).withSelfRel()
+                diseaseMapper.toDto(disease),
+                linkTo(methodOn(DiseaseController.class).getDisease(disease.getId())).withSelfRel()
         );
     }
 
