@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 public class Dosage {
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Medicine medicine;
 
     private String reason;

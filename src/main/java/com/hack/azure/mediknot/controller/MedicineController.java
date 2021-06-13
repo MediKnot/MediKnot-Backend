@@ -1,11 +1,16 @@
 package com.hack.azure.mediknot.controller;
 
+import com.hack.azure.mediknot.dto.DiseaseDto;
 import com.hack.azure.mediknot.dto.MedicineDto;
 import com.hack.azure.mediknot.entity.Medicine;
 import com.hack.azure.mediknot.mapper.MedicineMapper;
 import com.hack.azure.mediknot.service.MedicineService;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
@@ -36,6 +41,16 @@ public class MedicineController {
     public EntityModel<MedicineDto> getMedicine(@PathVariable Integer id){
         return EntityModel.of(
                 medicineMapper.toDto(medicineService.getMedicine(id))
+        );
+    }
+
+    @GetMapping("/search")
+    public CollectionModel<EntityModel<MedicineDto>> searchMedicine(@RequestParam String name){
+        List<EntityModel<MedicineDto>> result = medicineService.searchMedicine(name).stream().map(
+                disease -> EntityModel.of(medicineMapper.toDto(disease))
+        ).collect(Collectors.toList());
+        return CollectionModel.of(
+                result
         );
     }
 }
