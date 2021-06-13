@@ -23,7 +23,7 @@ public class DiseaseController {
     }
 
     @PostMapping
-    private EntityModel<DiseaseDto> addDisease(@RequestBody DiseaseDto diseaseDto){
+    public EntityModel<DiseaseDto> addDisease(@RequestBody DiseaseDto diseaseDto){
         Disease disease = diseaseMapper.toEntity(diseaseDto);
         disease = diseaseService.addDisease(disease);
         return EntityModel.of(
@@ -34,7 +34,7 @@ public class DiseaseController {
     }
 
     @GetMapping("/{id}")
-    private EntityModel<DiseaseDto> getDisease(@PathVariable Integer id){
+    public EntityModel<DiseaseDto> getDisease(@PathVariable Integer id){
         Disease disease = diseaseService.getDisease(id);
         return EntityModel.of(
                 diseaseMapper.toDto(disease)
