@@ -48,7 +48,7 @@ public class PatientServiceImpl implements PatientService{
     @Override
     public Patient addReports(Integer id, List<Report> reports) throws PatientException{
         Patient patient = getPatientById(id);
-        if(patient.getGeneralReports() != null){
+        if(patient.getGeneralReports() == null){
             patient.setGeneralReports(new ArrayList<>());
         }
         patient.getGeneralReports().addAll(reports);
@@ -59,7 +59,12 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Patient addAllergies(Integer id, List<String> allergies) {
-        return null;
+        Patient patient = getPatientById(id);
+        if(patient.getAllergies() == null){
+            patient.setAllergies(new ArrayList<>());
+        }
+        patient.getAllergies().addAll(allergies);
+        return updatePatient(patient);
     }
 
     @Override

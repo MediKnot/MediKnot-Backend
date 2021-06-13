@@ -58,6 +58,14 @@ public class PatientController {
         );
     }
 
+    @PutMapping("/add-allergies/{id}")
+    public EntityModel<PatientDto> addAllergies(@PathVariable Integer id, @RequestBody List<String> allergies){
+        Patient patient = patientService.addAllergies(id, allergies);
+        return EntityModel.of(
+                patientMapper.toDto(patient)
+        );
+    }
+
     @GetMapping("/clear-reports/{id}")
     public EntityModel<String> clearReports(@PathVariable Integer id){
         patientService.clearReports(id);
