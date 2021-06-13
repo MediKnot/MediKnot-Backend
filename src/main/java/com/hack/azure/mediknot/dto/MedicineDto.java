@@ -13,7 +13,16 @@ public class MedicineDto {
     private String medicineName;
     private String strength;
 
+    private String medicineFullName;
+
     private String type;
+
+    private Float mrp;
+    private String category;
+    private String uses;
+    private String composition;
+    private String manufacturer;
+    private String sideEffect;
 
     private Integer quantity;
     private String medicineQuantityType;

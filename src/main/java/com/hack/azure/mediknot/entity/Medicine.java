@@ -18,12 +18,26 @@ public class Medicine {
     private Integer id;
 
     private String medicineName;
+
+    private String medicineFullName;
     private String strength;
 
     @Enumerated(EnumType.STRING)
     private MedicineType type;
 
     private Integer quantity;
+
+    private Float mrp;
+    private String category;
+
+    @Column(columnDefinition = "TEXT")
+    private String uses;
+
+    private String composition;
+    private String manufacturer;
+
+    @Column(columnDefinition = "TEXT")
+    private String sideEffect;
 
     @Enumerated(EnumType.STRING)
     private MedicineQuantityType medicineQuantityType;
