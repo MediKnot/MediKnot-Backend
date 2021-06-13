@@ -19,4 +19,6 @@ public interface PatientService {
 
     public void clearReports(Integer id);
 
+    public Patient updatePatient(Patient patient);
+
 }
