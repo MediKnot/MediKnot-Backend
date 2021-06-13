@@ -55,8 +55,6 @@ public class PatientServiceImpl implements PatientService{
         return updatePatient(patient);
     }
 
-
-
     @Override
     public Patient addAllergies(Integer id, List<String> allergies) {
         Patient patient = getPatientById(id);
@@ -77,7 +75,8 @@ public class PatientServiceImpl implements PatientService{
         updatePatient(patient);
     }
 
-    private Patient updatePatient(Patient patient) throws UserException {
+    @Override
+    public Patient updatePatient(Patient patient) throws UserException {
         if(patient.getId()==null){
             throw new UserException("Id not present in Patient body", 204);
         }

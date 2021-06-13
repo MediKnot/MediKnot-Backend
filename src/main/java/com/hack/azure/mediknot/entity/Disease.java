@@ -16,17 +16,23 @@ public class Disease {
     private Integer id;
 
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String introduction;
 
+    @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> symptoms;
 
+    @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> causes;
 
+    @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> diagnosis;
 
+    @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> cures;
 }
