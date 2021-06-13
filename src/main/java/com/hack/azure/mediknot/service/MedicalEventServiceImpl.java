@@ -7,11 +7,13 @@ import com.hack.azure.mediknot.exception.MedicalEventException;
 import com.hack.azure.mediknot.exception.PatientException;
 import com.hack.azure.mediknot.repository.MedicalEventRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class MedicalEventServiceImpl implements MedicalEventService {
 
     private MedicalEventRepository medicalEventRepository;
