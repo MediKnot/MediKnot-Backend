@@ -24,6 +24,31 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
+    public Doctor updateDoctorById(Integer id, Doctor doctor) {
+        return null;
+    }
+
+    @Override
+    public Doctor addDegree(Integer id, String degree) {
+        return null;
+    }
+
+    @Override
+    public Doctor addSpecialization(Integer id, String specialization) {
+        return null;
+    }
+
+    @Override
+    public Doctor addMedicalCouncilAffiliation(Integer id, String medicalCouncilAffiliation) {
+        return null;
+    }
+
+    @Override
+    public Doctor addClinicName(Integer id, String clinicName) {
+        return null;
+    }
+
+    @Override
     public Doctor createDoctor(Doctor doctor) throws DoctorException {
         if(doctorRepository.existsByEmailId(doctor.getEmailId())){
             throw new DoctorException("Doctor with email Id exists.", 409);
