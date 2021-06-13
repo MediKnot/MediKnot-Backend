@@ -35,9 +35,9 @@ public class DiseaseServiceImpl implements DiseaseService{
 
         for (Disease disease:allDiseases){
             if(FuzzySearch.partialRatio(name, disease.getName()) >= 70){
-                allDiseases.add(disease);
+                result.add(disease);
             }
         }
-        return allDiseases;
+        return result;
     }
 }

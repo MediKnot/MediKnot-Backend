@@ -47,7 +47,8 @@ public class DiseaseController {
     @GetMapping("/search")
     public CollectionModel<EntityModel<DiseaseDto>> searchDiseases(@RequestParam String name){
         List<EntityModel<DiseaseDto>> result = diseaseService.searchDiseases(name).stream().map(
-                disease -> EntityModel.of(diseaseMapper.toDto(disease))
+                disease -> EntityModel.of(diseaseMapper.toDto(disease),
+                        linkTo(methodOn(DiseaseController.class).getDisease(disease.getId())).withSelfRel())
         ).collect(Collectors.toList());
         return CollectionModel.of(
                 result
