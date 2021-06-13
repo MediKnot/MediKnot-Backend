@@ -17,7 +17,7 @@ public interface PrescriptionMapper {
     default MedicineDto medicineToDto(Medicine medicine){
         MedicineDto medicineDto = new MedicineDto();
         medicineDto.setId(medicine.getId());
-        medicineDto.setMedicineName(medicine.getMedicineName());
+        medicineDto.setMedicineFullName(medicine.getMedicineFullName());
         return medicineDto;
     }
 
