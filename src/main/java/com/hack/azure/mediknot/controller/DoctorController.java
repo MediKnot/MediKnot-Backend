@@ -39,4 +39,37 @@ public class DoctorController {
                 doctorMapper.toDto(doctor)
         );
     }
+
+    @PutMapping("/add-specialization/{id}")
+    public EntityModel<DoctorDto> addSpecialization(@PathVariable Integer id, @RequestParam("Specialization") String specialization){
+        Doctor doctor = doctorService.addSpecialization(id, specialization);
+        return EntityModel.of(
+                doctorMapper.toDto(doctor)
+        );
+    }
+
+    @PutMapping("/add-clinic-name/{id}")
+    public EntityModel<DoctorDto> addClinicName(@PathVariable Integer id, @RequestParam("ClinicName") String clinicName){
+        Doctor doctor = doctorService.addClinicName(id, clinicName);
+        return EntityModel.of(
+                doctorMapper.toDto(doctor)
+        );
+    }
+
+    @PutMapping("/add-degree/{id}")
+    public EntityModel<DoctorDto> addDegree(@PathVariable Integer id, @RequestParam("Degree") String degree){
+        Doctor doctor = doctorService.addDegree(id, degree);
+        return EntityModel.of(
+                doctorMapper.toDto(doctor)
+        );
+    }
+
+    @PostMapping("/update-doctor-by-id/{id}")
+    public EntityModel<DoctorDto> updateDoctorById(@PathVariable Integer id, @RequestBody DoctorDto doctorDto){
+        Doctor doctor = doctorMapper.toEntity(doctorDto);
+        Doctor doctorUpdated = doctorService.updateDoctorById(id, doctor);
+        return EntityModel.of(
+                doctorMapper.toDto(doctorUpdated)
+        );
+    }
 }
