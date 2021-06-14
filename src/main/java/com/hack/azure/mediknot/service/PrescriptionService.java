@@ -9,6 +9,8 @@ public interface PrescriptionService {
 
     public Prescription addPrescription(Integer consultationId, Prescription prescription);
 
+    public Prescription getPrescriptionById(Integer id);
+
     public Prescription updatePrescriptionById(Integer id, Prescription prescription);
 
     public Prescription addDosages(Integer id, List<Dosage> dosageList);
