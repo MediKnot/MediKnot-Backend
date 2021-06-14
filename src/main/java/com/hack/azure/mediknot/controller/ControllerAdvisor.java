@@ -37,4 +37,8 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleException(ConsultationException ex){
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
+    @ExceptionHandler(PrescriptionException.class)
+    public ResponseEntity<String> handleException(PrescriptionException ex){
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
 }
