@@ -8,11 +8,13 @@ import com.hack.azure.mediknot.exception.ConsultationException;
 import com.hack.azure.mediknot.exception.MedicalEventException;
 import com.hack.azure.mediknot.repository.ConsultationRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+@Service
 public class ConsultationServiceImpl implements ConsultationService {
 
     private ConsultationRepository consultationRepository;
