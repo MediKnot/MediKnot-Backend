@@ -49,11 +49,9 @@ public class MedicalEventController {
     }
 
     @DeleteMapping("/{id}")
-    public EntityModel<String> removeMedicalEvent(@PathVariable Integer id){
+    public String removeMedicalEvent(@PathVariable Integer id){
         medicalEventService.removeMedicalEvent(id);
-        return EntityModel.of(
-                "Medical Event removed with id: " + id
-        );
+        return "Medical Event removed with id: " + id;
     }
 
     @PutMapping("/{id}")
@@ -101,11 +99,8 @@ public class MedicalEventController {
     }
 
     @PutMapping("/clear/reports/{id}")
-    public EntityModel<String> clearReports(@PathVariable Integer id){
+    public String clearReports(@PathVariable Integer id){
         medicalEventService.clearReports(id);
-        return EntityModel.of(
-                "Reports cleared of medicalEvent with id: " + id,
-                linkTo(methodOn(MedicalEventController.class).getMedicalEvent(id)).withSelfRel()
-        );
+        return "Reports cleared of medicalEvent with id: " + id.toString();
     }
 }

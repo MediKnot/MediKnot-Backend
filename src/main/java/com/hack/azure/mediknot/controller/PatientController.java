@@ -75,11 +75,8 @@ public class PatientController {
     }
 
     @PutMapping("/clear/reports/{id}")
-    public EntityModel<String> clearReports(@PathVariable Integer id){
+    public String clearReports(@PathVariable Integer id){
         patientService.clearReports(id);
-        return EntityModel.of(
-                "Reports cleared of patient with id: " + id,
-                linkTo(methodOn(PatientController.class).getPatient(id)).withSelfRel()
-        );
+        return "Reports cleared of patient with id: " + id.toString();
     }
 }

@@ -49,12 +49,9 @@ public class PrescriptionController {
     }
 
     @DeleteMapping("/{id}")
-    public EntityModel<String> removePrescription(@PathVariable Integer id){
+    public String removePrescription(@PathVariable Integer id){
         prescriptionService.removePrescription(id);
-        return EntityModel.of(
-                "Prescription removed with id: " + id,
-                linkTo(methodOn(PrescriptionController.class).getPrescriptionById(id)).withSelfRel()
-        );
+        return "Prescription removed with id: " + id.toString();
     }
 
     @PutMapping("/{id}")
@@ -77,11 +74,8 @@ public class PrescriptionController {
     }
 
     @PutMapping("/clear/dosages/{id}")
-    public EntityModel<String> clearDosages(@PathVariable Integer id){
+    public String clearDosages(@PathVariable Integer id){
         prescriptionService.clearDosages(id);
-        return EntityModel.of(
-                "Dosages cleared of Prescription with id: " + id,
-                linkTo(methodOn(PrescriptionController.class).getPrescriptionById(id)).withSelfRel()
-        );
+        return  "Dosages cleared of Prescription with id: " + id.toString();
     }
 }

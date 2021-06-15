@@ -60,11 +60,9 @@ public class ConsultationController {
     }
 
     @DeleteMapping("/{id}")
-    public EntityModel<String> deleteConsultation(@PathVariable Integer id){
+    public String deleteConsultation(@PathVariable Integer id){
         consultationService.removeConsultation(id);
-        return EntityModel.of(
-                "Consultation removed with id: " + id
-        );
+        return "Consultation removed with id: " + id.toString();
     }
 
     @PutMapping("/add/notes/{id}")
@@ -76,11 +74,9 @@ public class ConsultationController {
     }
 
     @GetMapping("/clear/reports/{id}")
-    public EntityModel<String> clearNotes(@PathVariable Integer id){
+    public String clearNotes(@PathVariable Integer id){
         consultationService.clearNotes(id);
-        return EntityModel.of(
-                "Reports cleared of consultation with id: " + id
-        );
+        return  "Reports cleared of consultation with id: " + id.toString();
     }
 
     @PutMapping("/add/treatment/{id}")
@@ -94,10 +90,8 @@ public class ConsultationController {
     }
 
     @GetMapping("/clear/treatment/{id}")
-    public EntityModel<String> clearTreatments(@PathVariable Integer id){
+    public String clearTreatments(@PathVariable Integer id){
         consultationService.clearTreatment(id);
-        return EntityModel.of(
-                "Treatments cleared of consultation with id: " + id
-        );
+        return "Treatments cleared of consultation with id: " + id.toString();
     }
 }
