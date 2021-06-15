@@ -48,6 +48,14 @@ public class PatientController {
         );
     }
 
+    @GetMapping("/phone/{number}")
+    public EntityModel<PatientDto> getPatient(@PathVariable String number){
+        Patient patient = patientService.getPatientByPhoneNumber(number);
+        return EntityModel.of(
+                patientMapper.toDto(patient)
+        );
+    }
+
     @PutMapping("/add-reports/{id}")
     public EntityModel<PatientDto> addReports(@PathVariable Integer id, @RequestBody List<ReportDto> reportDtos){
         List<Report> reportList = reportDtos.stream().map(reportDto -> reportMapper.toEntity(reportDto))

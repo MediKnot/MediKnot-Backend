@@ -5,6 +5,7 @@ import com.hack.azure.mediknot.exception.DoctorException;
 import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.DoctorRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -97,11 +98,24 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
+    public Doctor getDoctorByPhoneNumber(String phoneNumber) {
+        Doctor doctor = doctorRepository.findByPhoneNumber(phoneNumber);
+        if(doctor == null)
+            throw new DoctorException("Doctor not found with phone number", 404);
+        return doctor;
+    }
+
+    @Override
     public Doctor createDoctor(Doctor doctor) throws DoctorException {
         if(doctorRepository.existsByEmailId(doctor.getEmailId())){
             throw new DoctorException("Doctor with email Id exists.", 409);
         }
-        return doctorRepository.save(doctor);
+        try{
+            doctor = doctorRepository.save(doctor);
+        }catch (DataIntegrityViolationException exception){
+            throw new DoctorException(exception.getMessage(), 500);
+        }
+        return doctor;
     }
 
     private Doctor updateDoctor(Doctor doctor) throws UserException {

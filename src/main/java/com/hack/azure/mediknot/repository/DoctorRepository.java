@@ -10,4 +10,6 @@ public interface DoctorRepository extends CrudRepository<Doctor, Integer>{
     public Doctor findByRegistrationNumber(String registrationNumber);
 
     public boolean existsByEmailId(String emailId);
+
+    public Doctor findByPhoneNumber(String phoneNumber);
 }
