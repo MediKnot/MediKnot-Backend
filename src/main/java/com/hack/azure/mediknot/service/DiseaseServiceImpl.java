@@ -1,10 +1,8 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.entity.Disease;
-import com.hack.azure.mediknot.entity.Medicine;
 import com.hack.azure.mediknot.exception.DiseaseException;
 import com.hack.azure.mediknot.repository.DiseaseRepository;
-import javafx.util.Pair;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.springframework.stereotype.Service;
 
