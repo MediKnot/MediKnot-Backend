@@ -14,11 +14,11 @@ import java.util.Set;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConsultationDto {
     private Integer id;
-    private DoctorDto doctorDto;
+    private DoctorDto doctor;
 
-    private Set<PrescriptionDto> prescriptionsDto;
+    private Set<PrescriptionDto> prescriptionList;
 
-    private List<TreatmentDto> treatmentsDto;
+    private List<TreatmentDto> treatmentList;
 
     private List<String> notes;
 
