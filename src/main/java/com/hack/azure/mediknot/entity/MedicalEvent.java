@@ -35,6 +35,9 @@ public class MedicalEvent {
     @OneToMany
     private Set<Consultation> consultationList;
 
+    @OneToMany
+    private Set<Disease> diseases;
+
     @ElementCollection
     private List<Report> reports;
     //precautions

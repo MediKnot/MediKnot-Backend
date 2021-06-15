@@ -1,9 +1,11 @@
 package com.hack.azure.mediknot.mapper;
 
 import com.hack.azure.mediknot.dto.ConsultationMedicalEventDto;
+import com.hack.azure.mediknot.dto.DiseaseDto;
 import com.hack.azure.mediknot.dto.MedicalEventDto;
 import com.hack.azure.mediknot.dto.PatientDto;
 import com.hack.azure.mediknot.entity.Consultation;
+import com.hack.azure.mediknot.entity.Disease;
 import com.hack.azure.mediknot.entity.MedicalEvent;
 import com.hack.azure.mediknot.entity.Patient;
 import org.mapstruct.Mapper;
@@ -28,4 +30,11 @@ public interface MedicalEventMapper {
     @Mapping(source = "consultation.id", target = "id")
     @Mapping(source = "consultation.doctor.name", target = "doctorName")
     ConsultationMedicalEventDto consultationToDto(Consultation consultation);
+
+    default DiseaseDto diseaseToDto(Disease disease){
+        DiseaseDto diseaseDto = new DiseaseDto();
+        diseaseDto.setId(disease.getId());
+        disease.setName(disease.getName());
+        return diseaseDto;
+    }
 }

@@ -33,6 +33,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         Doctor doctor = doctorService.getDoctorById(doctorId);
         if (medicalEvent.getIsActive()){
             consultation.setDoctor(doctor);
+            consultation = consultationRepository.save(consultation);
             if (medicalEvent.getConsultationList() == null){
                 medicalEvent.setConsultationList(new HashSet<>());
             }

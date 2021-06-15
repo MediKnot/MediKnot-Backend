@@ -30,7 +30,7 @@ public class MedicalEventController {
         this.reportMapper = reportMapper;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{patientId}")
     public EntityModel<MedicalEventDto> addMedicalEvent(@PathVariable Integer patientId, @RequestBody MedicalEventDto medicalEventDto){
         MedicalEvent medicalEvent = medicalEventMapper.toEntity(medicalEventDto);
         medicalEvent = medicalEventService.addMedicalEvent(patientId, medicalEvent);
@@ -52,8 +52,7 @@ public class MedicalEventController {
     public EntityModel<String> removeMedicalEvent(@PathVariable Integer id){
         medicalEventService.removeMedicalEvent(id);
         return EntityModel.of(
-                "Medical Event removed with id: " + id,
-                linkTo(methodOn(MedicalEventController.class).getMedicalEvent(id)).withSelfRel()
+                "Medical Event removed with id: " + id
         );
     }
 
@@ -66,7 +65,7 @@ public class MedicalEventController {
         );
     }
     
-    @PostMapping("/close-medical-event/{id}")
+    @GetMapping("/close-medical-event/{id}")
     public EntityModel<MedicalEventDto> closeMedicalEvent(@PathVariable Integer id){
         MedicalEvent medicalEvent = medicalEventService.closeMedicalEvent(id);
         return EntityModel.of(
@@ -75,7 +74,7 @@ public class MedicalEventController {
     }
 
 
-    @PutMapping("/add-reports/{id}")
+    @PutMapping("/add/reports/{id}")
     public EntityModel<MedicalEventDto> addReports(@PathVariable Integer id, @RequestBody List<ReportDto> reportDtos){
         List<Report> reportList = reportDtos.stream().map(reportDto -> reportMapper.toEntity(reportDto))
                 .collect(Collectors.toList());
@@ -85,7 +84,23 @@ public class MedicalEventController {
         );
     }
 
-    @GetMapping("/clear-reports/{id}")
+    @PutMapping("/add/disease/{eventId}/{diseaseId}")
+    public EntityModel<MedicalEventDto> addDisease(@PathVariable Integer eventId, @PathVariable Integer diseaseId){
+        MedicalEvent medicalEvent = medicalEventService.addDisease(eventId, diseaseId);
+        return EntityModel.of(
+                medicalEventMapper.toDto(medicalEvent)
+        );
+    }
+
+    @PutMapping("/remove/disease/{eventId}/{diseaseId}")
+    public EntityModel<MedicalEventDto> removeDisease(@PathVariable Integer eventId, @PathVariable Integer diseaseId){
+        MedicalEvent medicalEvent = medicalEventService.removeDisease(eventId, diseaseId);
+        return EntityModel.of(
+                medicalEventMapper.toDto(medicalEvent)
+        );
+    }
+
+    @PutMapping("/clear/reports/{id}")
     public EntityModel<String> clearReports(@PathVariable Integer id){
         medicalEventService.clearReports(id);
         return EntityModel.of(

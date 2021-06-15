@@ -30,7 +30,7 @@ public class PrescriptionController {
         this.dosageMapper = dosageMapper;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("/{consultationId}")
     public EntityModel<PrescriptionDto> addPrescription(@PathVariable Integer consultationId, @RequestBody PrescriptionDto prescriptionDto){
         Prescription prescription = prescriptionMapper.toEntity(prescriptionDto);
         prescription = prescriptionService.addPrescription(consultationId, prescription);
@@ -66,7 +66,7 @@ public class PrescriptionController {
         );
     }
 
-    @PutMapping("/add-dosages/{id}")
+    @PutMapping("/add/dosages/{id}")
     public EntityModel<PrescriptionDto> addDosages(@PathVariable Integer id, @RequestBody List<DosageDto> dosageDtos){
         List<Dosage> dosageList = dosageDtos.stream().map(dosageDto -> dosageMapper.toEntity(dosageDto))
                 .collect(Collectors.toList());
@@ -76,7 +76,7 @@ public class PrescriptionController {
         );
     }
 
-    @GetMapping("/clear-dosages/{id}")
+    @PutMapping("/clear/dosages/{id}")
     public EntityModel<String> clearDosages(@PathVariable Integer id){
         prescriptionService.clearDosages(id);
         return EntityModel.of(

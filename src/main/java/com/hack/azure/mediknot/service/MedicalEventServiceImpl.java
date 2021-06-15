@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.service;
 
+import com.hack.azure.mediknot.entity.Disease;
 import com.hack.azure.mediknot.entity.MedicalEvent;
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Report;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -18,10 +20,12 @@ public class MedicalEventServiceImpl implements MedicalEventService {
 
     private MedicalEventRepository medicalEventRepository;
     private PatientService patientService;
+    private DiseaseService diseaseService;
 
-    public MedicalEventServiceImpl(MedicalEventRepository medicalEventRepository, PatientService patientService) {
+    public MedicalEventServiceImpl(MedicalEventRepository medicalEventRepository, PatientService patientService, DiseaseService diseaseService) {
         this.medicalEventRepository = medicalEventRepository;
         this.patientService = patientService;
+        this.diseaseService = diseaseService;
     }
 
     @Override
@@ -91,6 +95,36 @@ public class MedicalEventServiceImpl implements MedicalEventService {
             medicalEvent.setReports(new ArrayList<>());
         }
         medicalEvent.getReports().addAll(reports);
+        return updateMedicalEvent(medicalEvent);
+    }
+
+    @Override
+    public MedicalEvent addDisease(Integer eventId, Integer diseaseId) {
+        MedicalEvent medicalEvent = getMedicalEvent(eventId);
+        if(medicalEvent.getDiseases()==null)
+            medicalEvent.setDiseases(new HashSet<>());
+
+        Disease disease = diseaseService.getDisease(diseaseId);
+        medicalEvent.getDiseases().add(disease);
+        return updateMedicalEvent(medicalEvent);
+    }
+
+    @Override
+    public MedicalEvent removeDisease(Integer eventId, Integer diseaseId) {
+        MedicalEvent medicalEvent = getMedicalEvent(eventId);
+        if(medicalEvent.getDiseases()==null)
+            return medicalEvent;
+        Disease removeDisease = null;
+        for(Disease disease:medicalEvent.getDiseases()){
+            if (disease.getId().equals(diseaseId)){
+                removeDisease = disease;
+                break;
+            }
+        }
+        if(removeDisease==null){
+            throw new MedicalEventException("Disease not mentioned in event.", 404);
+        }
+        medicalEvent.getDiseases().remove(removeDisease);
         return updateMedicalEvent(medicalEvent);
     }
 }

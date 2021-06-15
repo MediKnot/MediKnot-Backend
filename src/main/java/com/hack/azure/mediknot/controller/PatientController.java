@@ -56,7 +56,7 @@ public class PatientController {
         );
     }
 
-    @PutMapping("/add-reports/{id}")
+    @PutMapping("/add/reports/{id}")
     public EntityModel<PatientDto> addReports(@PathVariable Integer id, @RequestBody List<ReportDto> reportDtos){
         List<Report> reportList = reportDtos.stream().map(reportDto -> reportMapper.toEntity(reportDto))
                 .collect(Collectors.toList());
@@ -66,7 +66,7 @@ public class PatientController {
         );
     }
 
-    @PutMapping("/add-allergies/{id}")
+    @PutMapping("/add/allergies/{id}")
     public EntityModel<PatientDto> addAllergies(@PathVariable Integer id, @RequestBody List<String> allergies){
         Patient patient = patientService.addAllergies(id, allergies);
         return EntityModel.of(
@@ -74,7 +74,7 @@ public class PatientController {
         );
     }
 
-    @GetMapping("/clear-reports/{id}")
+    @PutMapping("/clear/reports/{id}")
     public EntityModel<String> clearReports(@PathVariable Integer id){
         patientService.clearReports(id);
         return EntityModel.of(

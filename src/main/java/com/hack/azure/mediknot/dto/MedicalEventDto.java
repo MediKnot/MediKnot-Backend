@@ -30,6 +30,8 @@ public class MedicalEventDto {
 
     private Set<ConsultationMedicalEventDto> consultationDtoList;
 
+    private Set<DiseaseDto> diseaseDtoList;
+
     private List<ReportDto> reports;
 
 }

@@ -22,4 +22,8 @@ public interface MedicalEventService {
     public void clearReports(Integer id);
 
     public MedicalEvent addReports(Integer id, List<Report> reports);
+
+    public MedicalEvent addDisease(Integer eventId, Integer diseaseId);
+
+    public MedicalEvent removeDisease(Integer eventId, Integer diseaseId);
 }
