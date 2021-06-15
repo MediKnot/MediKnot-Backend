@@ -19,4 +19,6 @@ public interface PrescriptionService {
 
     public void removePrescription(Integer id);
 
+    public Prescription updatePrescription(Prescription prescription);
+
 }
