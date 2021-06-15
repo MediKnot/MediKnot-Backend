@@ -32,36 +32,41 @@ public class DiseaseServiceImpl implements DiseaseService{
 
     @Override
     public List<Disease> searchDiseases(String name) {
-        List<Pair<Disease, Integer>> result = new ArrayList<>();
+        List<List<Object>> result = new ArrayList<>();
         List<Disease> allDiseases = (List<Disease>) diseaseRepository.findAll();
 
         for (Disease disease:allDiseases){
             int partialRatio = FuzzySearch.partialRatio(name, disease.getName());
             if(partialRatio >= 70){
-                result.add(new Pair(disease, partialRatio));
+                List<Object> curr = new ArrayList<>();
+                curr.add(disease);
+                curr.add(partialRatio);
+                result.add(curr);
             }
         }
         return findTopK(result, 5);
     }
 
-    private List<Disease> findTopK(List<Pair<Disease, Integer>> list, int k){
-        Comparator<Pair<Disease, Integer>> comparator = new Comparator<Pair<Disease, Integer>>(){
+    private List<Disease> findTopK(List<List<Object>> list, int k){
+        Comparator<List<Object>> comparator = new Comparator<List<Object>>(){
             @Override
-            public int compare(Pair<Disease, Integer> p1, Pair<Disease, Integer> p2){
-                if(p1.getValue()==p2.getValue()){
-                    if(p1.getKey().getId()<p2.getKey().getId()){
+            public int compare(List<Object> p1, List<Object> p2){
+                if((Integer)p1.get(1)==(Integer)p2.get(1)){
+                    if(((Disease)p1.get(0)).getId()<((Disease)p2.get(0)).getId()){
                         return 1;
                     }else{
                         return -1;
                     }
-                }else{
-                    return p1.getValue().compareTo(p2.getValue());
+                }else if((Integer)p1.get(1)<(Integer)p2.get(1)) {
+                    return -1;
+                }else {
+                    return 1;
                 }
             }
         };
         comparator = comparator.reversed();
-        Set<Pair<Disease, Integer>> set = new TreeSet<>(comparator);
+        Set<List<Object>> set = new TreeSet<>(comparator);
         set.addAll(list);
-        return set.stream().map(pair -> pair.getKey()).limit(k).collect(Collectors.toList());
+        return set.stream().map(pair -> (Disease)pair.get(0)).limit(k).collect(Collectors.toList());
     }
 }
