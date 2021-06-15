@@ -9,6 +9,7 @@ import com.hack.azure.mediknot.exception.PrescriptionException;
 import com.hack.azure.mediknot.repository.MedicineRepository;
 import com.hack.azure.mediknot.repository.PrescriptionRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Service
 public class PrescriptionServiceImpl implements PrescriptionService{
 
     private PrescriptionRepository prescriptionRepository;
