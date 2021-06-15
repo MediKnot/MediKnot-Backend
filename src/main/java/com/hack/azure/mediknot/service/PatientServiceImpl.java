@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.service;
 
+import com.hack.azure.mediknot.config.BeanNotNullCopy;
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Report;
 import com.hack.azure.mediknot.entity.User;
@@ -23,19 +24,19 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient getPatientById(Integer id) {
+    public Patient getPatientById(Integer id) throws PatientException{
         return patientRepository.findById(id).orElseThrow(() -> new PatientException("Patient not found.", 404));
     }
 
     @Override
-    public Patient updatePatientById(Integer id, Patient patient) {
+    public Patient updatePatientById(Integer id, Patient patient) throws PatientException{
         Patient existingPatient;
         try{
             existingPatient = getPatientById(id);
         }catch (UserException e){
             throw new UserException("Couldn't update, patient not found", 404);
         }
-        BeanUtils.copyProperties(patient, existingPatient);
+        BeanNotNullCopy.copyNonNullProperties(patient,existingPatient);
         return patientRepository.save(existingPatient);
     }
 
@@ -63,7 +64,7 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public Patient addAllergies(Integer id, List<String> allergies) {
+    public Patient addAllergies(Integer id, List<String> allergies) throws PatientException{
         Patient patient = getPatientById(id);
         if(patient.getAllergies() == null){
             patient.setAllergies(new ArrayList<>());
@@ -73,10 +74,10 @@ public class PatientServiceImpl implements PatientService{
     }
 
     @Override
-    public void clearReports(Integer id) throws UserException{
+    public void clearReports(Integer id) throws PatientException{
         Patient patient = getPatientById(id);
-        if(patient.getGeneralReports()==null){
-            return;
+        if(patient.getGeneralReports()==null && patient.getGeneralReports().isEmpty()){
+            throw new PatientException("Reports are not present of Patient", 204);
         }
         patient.getGeneralReports().clear();
         updatePatient(patient);

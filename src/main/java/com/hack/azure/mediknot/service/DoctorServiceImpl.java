@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.service;
 
+import com.hack.azure.mediknot.config.BeanNotNullCopy;
 import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.exception.DoctorException;
 import com.hack.azure.mediknot.exception.UserException;
@@ -33,7 +34,7 @@ public class DoctorServiceImpl implements DoctorService{
         }catch (UserException e){
             throw new UserException("Couldn't update, patient not found", 404);
         }
-        BeanUtils.copyProperties(doctor, existingDoctor);
+        BeanNotNullCopy.copyNonNullProperties(doctor,existingDoctor);
         return doctorRepository.save(existingDoctor);
     }
 

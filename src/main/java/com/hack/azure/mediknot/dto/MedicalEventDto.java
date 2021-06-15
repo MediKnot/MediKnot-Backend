@@ -28,9 +28,9 @@ public class MedicalEventDto {
 
     private String critical;
 
-    private Set<ConsultationMedicalEventDto> consultationDtoList;
+    private Set<ConsultationMedicalEventDto> consultationList;
 
-    private Set<DiseaseDto> diseaseDtoList;
+    private Set<DiseaseDto> diseases;
 
     private List<ReportDto> reports;
 

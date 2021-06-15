@@ -16,7 +16,7 @@ public interface MedicalEventMapper {
 
     MedicalEvent toEntity(MedicalEventDto medicalEventDto);
 
-    @Mapping(source = "medicalEvent.consultationList", target = "consultationDtoList")
+    @Mapping(source = "medicalEvent.consultationList", target = "consultationList")
     MedicalEventDto toDto(MedicalEvent medicalEvent);
 
     default PatientDto patientToDto(Patient patient){

@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.service;
 
+import com.hack.azure.mediknot.config.BeanNotNullCopy;
 import com.hack.azure.mediknot.entity.Consultation;
 import com.hack.azure.mediknot.entity.Dosage;
 import com.hack.azure.mediknot.entity.Medicine;
@@ -57,7 +58,7 @@ public class PrescriptionServiceImpl implements PrescriptionService{
     @Override
     public Prescription updatePrescriptionById(Integer id, Prescription prescription) throws PrescriptionException{
         Prescription existingPrescription = getPrescriptionById(id);
-        BeanUtils.copyProperties(prescription, existingPrescription);
+        BeanNotNullCopy.copyNonNullProperties(prescription,existingPrescription);
         return updatePrescription(existingPrescription);
     }
 
@@ -91,6 +92,9 @@ public class PrescriptionServiceImpl implements PrescriptionService{
     @Override
     public Prescription clearDosages(Integer id) throws PrescriptionException{
         Prescription prescription = getPrescriptionById(id);
+        if (prescription.getDosageList() == null){
+            throw new PrescriptionException("Dosage List empty, can't remove dosages", 404);
+        }
         prescription.setDosageList(new ArrayList<>());
         return updatePrescription(prescription);
     }

@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.service;
 
+import com.hack.azure.mediknot.config.BeanNotNullCopy;
 import com.hack.azure.mediknot.entity.Consultation;
 import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.entity.MedicalEvent;
@@ -67,7 +68,7 @@ public class ConsultationServiceImpl implements ConsultationService {
         }catch (ConsultationException e){
             throw new ConsultationException("Couldn't update, consultation not found", 404);
         }
-        BeanUtils.copyProperties(consultation, existingConsultation);
+        BeanNotNullCopy.copyNonNullProperties(consultation, existingConsultation);
         return consultationRepository.save(existingConsultation);
     }
 
@@ -88,7 +89,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     public void clearNotes(Integer id) {
         Consultation consultation = getConsultation(id);
         if(consultation.getNotes()==null){
-            return;
+            throw new ConsultationException("Notes not present in consultation body", 204);
         }
         consultation.getNotes().clear();
         updateConsultation(consultation);
@@ -108,7 +109,7 @@ public class ConsultationServiceImpl implements ConsultationService {
     public void clearTreatment(Integer id) {
         Consultation consultation = getConsultation(id);
         if(consultation.getTreatmentList()==null){
-            return;
+            throw new ConsultationException("Treatment not present in consultation body", 204);
         }
         consultation.getTreatmentList().clear();
         updateConsultation(consultation);

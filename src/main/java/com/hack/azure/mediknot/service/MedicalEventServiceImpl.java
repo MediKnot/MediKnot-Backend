@@ -1,5 +1,6 @@
 package com.hack.azure.mediknot.service;
 
+import com.hack.azure.mediknot.config.BeanNotNullCopy;
 import com.hack.azure.mediknot.entity.Disease;
 import com.hack.azure.mediknot.entity.MedicalEvent;
 import com.hack.azure.mediknot.entity.Patient;
@@ -53,7 +54,7 @@ public class MedicalEventServiceImpl implements MedicalEventService {
         }catch (MedicalEventException e){
             throw new MedicalEventException("Couldn't update, event not found", 404);
         }
-        BeanUtils.copyProperties(medicalEvent, existingMedicalEvent);
+        BeanNotNullCopy.copyNonNullProperties(medicalEvent,existingMedicalEvent);
         return medicalEventRepository.save(existingMedicalEvent);
     }
 
