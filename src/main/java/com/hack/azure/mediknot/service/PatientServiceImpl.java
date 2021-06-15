@@ -7,8 +7,10 @@ import com.hack.azure.mediknot.exception.PatientException;
 import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.PatientRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +44,12 @@ public class PatientServiceImpl implements PatientService{
         if(patientRepository.existsByEmailId(patient.getEmailId())){
             throw new PatientException("Patient with email id already exists", 409);
         }
-        return patientRepository.save(patient);
+        try{
+            patient = patientRepository.save(patient);
+        }catch (DataIntegrityViolationException exception){
+            throw new PatientException(exception.getMessage(), 500);
+        }
+        return patient;
     }
 
     @Override
@@ -81,5 +88,13 @@ public class PatientServiceImpl implements PatientService{
             throw new UserException("Id not present in Patient body", 204);
         }
         return patientRepository.save(patient);
+    }
+
+    @Override
+    public Patient getPatientByPhoneNumber(String phoneNumber) {
+        Patient patient = patientRepository.findByPhoneNumber(phoneNumber);
+        if(patient==null)
+            throw new PatientException("Patient not found with phone number", 404);
+        return patient;
     }
 }

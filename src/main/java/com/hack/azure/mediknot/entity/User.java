@@ -19,8 +19,12 @@ public class User {
     private Integer id;
 
     private String name;
+
+    @Column(unique = true)
     private String emailId;
     private String password;
+
+    @Column(unique = true)
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -32,6 +36,7 @@ public class User {
     @Embedded
     private Address address;
 
+    @Column(unique = true)
     private String aadharNumber;
     private String profileImageUrl;
 

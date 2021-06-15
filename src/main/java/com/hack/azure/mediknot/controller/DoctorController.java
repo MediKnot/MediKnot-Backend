@@ -40,6 +40,14 @@ public class DoctorController {
         );
     }
 
+    @GetMapping("/phone/{number}")
+    public EntityModel<DoctorDto> getDoctor(@PathVariable String number){
+        Doctor doctor = doctorService.getDoctorByPhoneNumber(number);
+        return EntityModel.of(
+                doctorMapper.toDto(doctor)
+        );
+    }
+
     @PutMapping("/add-specialization/{id}")
     public EntityModel<DoctorDto> addSpecialization(@PathVariable Integer id, @RequestParam("Specialization") String specialization){
         Doctor doctor = doctorService.addSpecialization(id, specialization);

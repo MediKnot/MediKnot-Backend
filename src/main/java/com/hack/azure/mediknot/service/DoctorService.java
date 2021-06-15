@@ -18,4 +18,6 @@ public interface DoctorService {
 
     public Doctor addClinicName(Integer id, String clinicName);
 
+    public Doctor getDoctorByPhoneNumber(String phoneNumber);
+
 }

@@ -21,4 +21,6 @@ public interface PatientService {
 
     public Patient updatePatient(Patient patient);
 
+    public Patient getPatientByPhoneNumber(String phoneNumber);
+
 }
