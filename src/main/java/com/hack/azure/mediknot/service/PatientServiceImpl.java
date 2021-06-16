@@ -48,7 +48,7 @@ public class PatientServiceImpl implements PatientService{
         try{
             patient = patientRepository.save(patient);
         }catch (DataIntegrityViolationException exception){
-            throw new PatientException(exception.getMessage(), 500);
+            throw new PatientException("User with phone number already exists.", 409);
         }
         return patient;
     }
