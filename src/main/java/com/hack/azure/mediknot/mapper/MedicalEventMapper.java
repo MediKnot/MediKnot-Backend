@@ -34,7 +34,7 @@ public interface MedicalEventMapper {
     default DiseaseDto diseaseToDto(Disease disease){
         DiseaseDto diseaseDto = new DiseaseDto();
         diseaseDto.setId(disease.getId());
-        disease.setName(disease.getName());
+        diseaseDto.setName(disease.getName());
         return diseaseDto;
     }
 }
