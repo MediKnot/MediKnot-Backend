@@ -8,6 +8,7 @@ import com.hack.azure.mediknot.entity.Treatment;
 import com.hack.azure.mediknot.mapper.ConsultationMapper;
 import com.hack.azure.mediknot.mapper.TreatmentMapper;
 import com.hack.azure.mediknot.service.ConsultationService;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,10 +33,10 @@ public class ConsultationController {
         this.treatmentMapper = treatmentMapper;
     }
 
-    @PostMapping("/{doctorId}")
-    public EntityModel<ConsultationDto> addConsultation(@PathVariable Integer doctorId, @RequestBody ConsultationDto consultationDto){
+    @PostMapping("/{patientId}/{doctorId}")
+    public EntityModel<ConsultationDto> addConsultationPatient(@PathVariable Integer patientId, @PathVariable Integer doctorId, @RequestBody ConsultationDto consultationDto){
         Consultation consultation = consultationMapper.toEntity(consultationDto);
-        consultation = consultationService.addConsultation(doctorId, consultation);
+        consultation = consultationService.addConsultation( doctorId, consultation, patientId);
         return EntityModel.of(
                 consultationMapper.toDto(consultation),
                 linkTo(methodOn(ConsultationController.class).getConsultation(consultation.getId())).withSelfRel()
@@ -94,5 +95,12 @@ public class ConsultationController {
     public String clearTreatments(@PathVariable Integer id){
         consultationService.clearTreatment(id);
         return "Treatments cleared of consultation with id: " + id.toString();
+    }
+
+    @GetMapping("/list/{patientId}")
+    public CollectionModel<EntityModel<ConsultationDto>> getConsultationByPatient(@PathVariable Integer patientId){
+        List<Consultation> consultations = consultationService.getConsultationListOfPatient(patientId);
+        List<EntityModel<ConsultationDto>> entityModels = consultations.stream().map(consultation -> EntityModel.of(consultationMapper.toDto(consultation))).collect(Collectors.toList());
+        return CollectionModel.of(entityModels);
     }
 }

@@ -27,7 +27,9 @@ public class MedicalEvent {
     @Embedded
     private Address location;
 
-    private Boolean isActive;   
+    private Boolean isActive;
+
+    private String description;
 
     @Enumerated(EnumType.STRING)
     private MedicalEventType critical;

@@ -30,5 +30,8 @@ public class Consultation {
     @ElementCollection
     private List<String> notes;
 
+    @ManyToOne
+    private Patient patient;
+
     private LocalDate consultationDate;
 }

@@ -34,4 +34,5 @@ public class MedicalEventDto {
 
     private List<ReportDto> reports;
 
+    private String description;
 }

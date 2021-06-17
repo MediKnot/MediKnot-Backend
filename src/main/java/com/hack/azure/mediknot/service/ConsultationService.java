@@ -9,7 +9,7 @@ public interface ConsultationService {
 
     public Consultation addConsultation(Integer eventId, Integer doctorId, Consultation consultation);
 
-    public Consultation addConsultation(Integer doctorId, Consultation consultation);
+    public Consultation addConsultation(Integer doctorId, Consultation consultation, Integer patientId);
 
     public void removeConsultation(Integer id);
 
@@ -26,5 +26,7 @@ public interface ConsultationService {
     public void clearTreatment(Integer id);
 
     public Consultation addTreatment(Integer id, List<Treatment> treatmentList);
+
+    public List<Consultation> getConsultationListOfPatient(Integer patientId);
 
 }

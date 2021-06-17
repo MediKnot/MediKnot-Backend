@@ -1,14 +1,10 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.config.BeanNotNullCopy;
-import com.hack.azure.mediknot.entity.Consultation;
-import com.hack.azure.mediknot.entity.Doctor;
-import com.hack.azure.mediknot.entity.MedicalEvent;
-import com.hack.azure.mediknot.entity.Treatment;
+import com.hack.azure.mediknot.entity.*;
 import com.hack.azure.mediknot.exception.ConsultationException;
 import com.hack.azure.mediknot.exception.MedicalEventException;
 import com.hack.azure.mediknot.repository.ConsultationRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,11 +17,13 @@ public class ConsultationServiceImpl implements ConsultationService {
     private ConsultationRepository consultationRepository;
     private MedicalEventService medicalEventService;
     private DoctorService doctorService;
+    private PatientService patientService;
 
-    public ConsultationServiceImpl(ConsultationRepository consultationRepository, MedicalEventService medicalEventService, DoctorService doctorService){
+    public ConsultationServiceImpl(ConsultationRepository consultationRepository, MedicalEventService medicalEventService, DoctorService doctorService, PatientService patientService){
         this.medicalEventService = medicalEventService;
         this.consultationRepository = consultationRepository;
         this.doctorService = doctorService;
+        this.patientService = patientService;
     }
 
     @Override
@@ -48,9 +46,11 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation addConsultation(Integer doctorId, Consultation consultation) {
+    public Consultation addConsultation(Integer doctorId, Consultation consultation, Integer patientId) {
         Doctor doctor = doctorService.getDoctorById(doctorId);
+        Patient patient = patientService.getPatientById(patientId);
         consultation.setDoctor(doctor);
+        consultation.setPatient(patient);
         return consultationRepository.save(consultation);
     }
 
@@ -123,5 +123,11 @@ public class ConsultationServiceImpl implements ConsultationService {
         }
         consultation.getTreatmentList().addAll(treatmentList);
         return updateConsultation(consultation);
+    }
+
+    @Override
+    public List<Consultation> getConsultationListOfPatient(Integer patientId) {
+        Patient patient = patientService.getPatientById(patientId);
+        return consultationRepository.findAllByPatient(patient);
     }
 }

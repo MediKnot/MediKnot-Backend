@@ -3,9 +3,11 @@ package com.hack.azure.mediknot.mapper;
 
 import com.hack.azure.mediknot.dto.ConsultationDto;
 import com.hack.azure.mediknot.dto.DoctorDto;
+import com.hack.azure.mediknot.dto.PatientDto;
 import com.hack.azure.mediknot.dto.PrescriptionDto;
 import com.hack.azure.mediknot.entity.Consultation;
 import com.hack.azure.mediknot.entity.Doctor;
+import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Prescription;
 import org.mapstruct.Mapper;
 
@@ -28,6 +30,13 @@ public interface ConsultationMapper {
         prescriptionDto.setId(prescription.getId());
         prescriptionDto.setDate(prescription.getDate());
         return prescriptionDto;
+    }
+
+    default PatientDto patientToDto(Patient patient){
+        PatientDto patientDto = new PatientDto();
+        patientDto.setId(patient.getId());
+        patientDto.setName(patient.getName());
+        return patientDto;
     }
 
 }
