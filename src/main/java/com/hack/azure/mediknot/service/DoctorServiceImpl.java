@@ -156,7 +156,7 @@ public class DoctorServiceImpl implements DoctorService{
             @Override
             public int compare(List<Object> p1, List<Object> p2){
                 if((Integer)p1.get(1)==(Integer)p2.get(1)){
-                    if(((Disease)p1.get(0)).getId()<((Disease)p2.get(0)).getId()){
+                    if(((Doctor)p1.get(0)).getId()<((Doctor)p2.get(0)).getId()){
                         return 1;
                     }else{
                         return -1;
