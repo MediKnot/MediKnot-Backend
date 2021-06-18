@@ -2,6 +2,8 @@ package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.entity.Doctor;
 
+import java.util.List;
+
 public interface DoctorService {
 
     public Doctor createDoctor(Doctor doctor);
@@ -19,5 +21,9 @@ public interface DoctorService {
     public Doctor addClinicName(Integer id, String clinicName);
 
     public Doctor getDoctorByPhoneNumber(String phoneNumber);
+
+    public List<Doctor> searchDoctors(String name);
+
+    public List<Doctor> getAllDoctors();
 
 }

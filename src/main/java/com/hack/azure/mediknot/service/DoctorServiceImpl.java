@@ -1,15 +1,18 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.config.BeanNotNullCopy;
+import com.hack.azure.mediknot.entity.Disease;
 import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.exception.DoctorException;
 import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.DoctorRepository;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorServiceImpl implements DoctorService{
@@ -107,6 +110,28 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
+    public List<Doctor> searchDoctors(String name) {
+        List<List<Object>> result = new ArrayList<>();
+        List<Doctor> allDoctors = getAllDoctors();
+
+        for (Doctor doctor:allDoctors){
+            int partialRatio = FuzzySearch.partialRatio(name, doctor.getName());
+            if(partialRatio >= 70){
+                List<Object> curr = new ArrayList<>();
+                curr.add(doctor);
+                curr.add(partialRatio);
+                result.add(curr);
+            }
+        }
+        return findTopK(result, result.size());
+    }
+
+    @Override
+    public List<Doctor> getAllDoctors() {
+        return (List<Doctor>) doctorRepository.findAll();
+    }
+
+    @Override
     public Doctor createDoctor(Doctor doctor) throws DoctorException {
         if(doctorRepository.existsByEmailId(doctor.getEmailId())){
             throw new DoctorException("Doctor with email Id exists.", 409);
@@ -124,5 +149,28 @@ public class DoctorServiceImpl implements DoctorService{
             throw new UserException("Id not present in doctor body", 204);
         }
         return doctorRepository.save(doctor);
+    }
+
+    private List<Doctor> findTopK(List<List<Object>> list, int k){
+        Comparator<List<Object>> comparator = new Comparator<List<Object>>(){
+            @Override
+            public int compare(List<Object> p1, List<Object> p2){
+                if((Integer)p1.get(1)==(Integer)p2.get(1)){
+                    if(((Disease)p1.get(0)).getId()<((Disease)p2.get(0)).getId()){
+                        return 1;
+                    }else{
+                        return -1;
+                    }
+                }else if((Integer)p1.get(1)<(Integer)p2.get(1)) {
+                    return -1;
+                }else {
+                    return 1;
+                }
+            }
+        };
+        comparator = comparator.reversed();
+        Set<List<Object>> set = new TreeSet<>(comparator);
+        set.addAll(list);
+        return set.stream().map(pair -> (Doctor)pair.get(0)).limit(k).collect(Collectors.toList());
     }
 }

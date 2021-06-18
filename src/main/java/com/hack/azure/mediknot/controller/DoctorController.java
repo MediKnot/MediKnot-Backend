@@ -4,8 +4,13 @@ import com.hack.azure.mediknot.dto.DoctorDto;
 import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.mapper.DoctorMapper;
 import com.hack.azure.mediknot.service.DoctorService;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -79,6 +84,28 @@ public class DoctorController {
         Doctor doctorUpdated = doctorService.updateDoctorById(id, doctor);
         return EntityModel.of(
                 doctorMapper.toDto(doctorUpdated)
+        );
+    }
+
+    @GetMapping("/search")
+    public CollectionModel<EntityModel<DoctorDto>> searchDoctor(@RequestParam String name){
+        List<EntityModel<DoctorDto>> result = doctorService.searchDoctors(name).stream().map(
+                doctor -> EntityModel.of(doctorMapper.toDto(doctor),
+                        linkTo(methodOn(DiseaseController.class).getDisease(doctor.getId())).withSelfRel())
+        ).collect(Collectors.toList());
+        return CollectionModel.of(
+                result
+        );
+    }
+
+    @GetMapping("/all")
+    public CollectionModel<EntityModel<DoctorDto>> getAllDoctors(){
+        List<EntityModel<DoctorDto>> result = doctorService.getAllDoctors().stream().map(
+                doctor -> EntityModel.of(doctorMapper.toDto(doctor),
+                        linkTo(methodOn(DiseaseController.class).getDisease(doctor.getId())).withSelfRel())
+        ).collect(Collectors.toList());
+        return CollectionModel.of(
+                result
         );
     }
 }
