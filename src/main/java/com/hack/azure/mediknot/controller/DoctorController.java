@@ -91,7 +91,7 @@ public class DoctorController {
     public CollectionModel<EntityModel<DoctorDto>> searchDoctor(@RequestParam String name){
         List<EntityModel<DoctorDto>> result = doctorService.searchDoctors(name).stream().map(
                 doctor -> EntityModel.of(doctorMapper.toDto(doctor),
-                        linkTo(methodOn(DiseaseController.class).getDisease(doctor.getId())).withSelfRel())
+                        linkTo(methodOn(DoctorController.class).getDoctor(doctor.getId())).withSelfRel())
         ).collect(Collectors.toList());
         return CollectionModel.of(
                 result
@@ -102,7 +102,7 @@ public class DoctorController {
     public CollectionModel<EntityModel<DoctorDto>> getAllDoctors(){
         List<EntityModel<DoctorDto>> result = doctorService.getAllDoctors().stream().map(
                 doctor -> EntityModel.of(doctorMapper.toDto(doctor),
-                        linkTo(methodOn(DiseaseController.class).getDisease(doctor.getId())).withSelfRel())
+                        linkTo(methodOn(DoctorController.class).getDoctor(doctor.getId())).withSelfRel())
         ).collect(Collectors.toList());
         return CollectionModel.of(
                 result
