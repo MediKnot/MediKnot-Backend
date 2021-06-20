@@ -1,7 +1,9 @@
 package com.hack.azure.mediknot.controller;
 
+import com.hack.azure.mediknot.dto.DoctorDto;
 import com.hack.azure.mediknot.dto.PatientDto;
 import com.hack.azure.mediknot.dto.ReportDto;
+import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Report;
 import com.hack.azure.mediknot.mapper.PatientMapper;
@@ -79,5 +81,14 @@ public class PatientController {
     public String clearReports(@PathVariable Integer id){
         patientService.clearReports(id);
         return "Reports cleared of patient with id: " + id.toString();
+    }
+
+    @PutMapping("/{id}")
+    public EntityModel<PatientDto> updatePatientById(@PathVariable Integer id, @RequestBody PatientDto patientDto){
+        Patient patient = patientMapper.toEntity(patientDto);
+        patient = patientService.updatePatientById(id, patient);
+        return EntityModel.of(
+                patientMapper.toDto(patient)
+        );
     }
 }

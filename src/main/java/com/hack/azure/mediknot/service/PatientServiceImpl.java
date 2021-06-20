@@ -1,6 +1,9 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.config.BeanNotNullCopy;
+import com.hack.azure.mediknot.dto.DoctorDto;
+import com.hack.azure.mediknot.dto.PatientDto;
+import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Report;
 import com.hack.azure.mediknot.entity.User;
@@ -9,7 +12,11 @@ import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.PatientRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;

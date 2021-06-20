@@ -43,7 +43,7 @@ public class ConsultationController {
         );
     }
 
-    @PostMapping("event/{eventId}/{doctorId}")
+    @PostMapping("/event/{eventId}/{doctorId}")
     public EntityModel<ConsultationDto> addConsultation(@PathVariable Integer eventId, @PathVariable Integer doctorId, @RequestBody ConsultationDto consultationDto){
         Consultation consultation = consultationMapper.toEntity(consultationDto);
         consultation = consultationService.addConsultation(eventId, doctorId, consultation);
