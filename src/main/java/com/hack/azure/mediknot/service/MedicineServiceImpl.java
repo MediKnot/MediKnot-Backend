@@ -33,8 +33,13 @@ public class MedicineServiceImpl implements MedicineService {
         List<Medicine> medicines = (List<Medicine>) medicineRepository.findAll();
 
         for (Medicine medicine:medicines){
-            int partialRatio = FuzzySearch.partialRatio(name, medicine.getMedicineFullName());
-            if(partialRatio >= 70){
+            int partialRatioFullName = FuzzySearch.partialRatio(name, medicine.getMedicineFullName());
+            int partialRatioUses = FuzzySearch.partialRatio(name, medicine.getUses());
+            int partialRatioName = FuzzySearch.partialRatio(name, medicine.getMedicineName());
+
+            int partialRatio = (partialRatioFullName+partialRatioName+partialRatioUses)/3;
+
+            if(partialRatio >= 65){
                 List<Object> curr = new ArrayList<>();
                 curr.add(medicine);
                 curr.add(partialRatio);
