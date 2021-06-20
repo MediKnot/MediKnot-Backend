@@ -29,6 +29,7 @@ public interface MedicalEventMapper {
 
     @Mapping(source = "consultation.id", target = "id")
     @Mapping(source = "consultation.doctor.name", target = "doctorName")
+    @Mapping(source = "consultation.consultationDate", target = "consultationDate")
     ConsultationMedicalEventDto consultationToDto(Consultation consultation);
 
     default DiseaseDto diseaseToDto(Disease disease){

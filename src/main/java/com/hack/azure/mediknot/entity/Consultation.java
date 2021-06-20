@@ -34,4 +34,7 @@ public class Consultation {
     private Patient patient;
 
     private LocalDate consultationDate;
+
+    @ElementCollection
+    private List<String> concerns;
 }

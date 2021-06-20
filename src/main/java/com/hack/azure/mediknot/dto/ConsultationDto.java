@@ -25,4 +25,6 @@ public class ConsultationDto {
     private LocalDate consultationDate;
 
     private PatientDto patient;
+
+    private List<String> concerns;
 }
