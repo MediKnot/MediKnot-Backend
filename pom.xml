@@ -71,6 +71,11 @@
 			<artifactId>spring-boot-starter-hateoas</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.sendgrid</groupId>
+			<artifactId>sendgrid-java</artifactId>
+			<version>4.6.7</version>
+		</dependency>
+		<dependency>
 			<groupId>me.xdrop</groupId>
 			<artifactId>fuzzywuzzy</artifactId>
 			<version>1.2.0</version>
