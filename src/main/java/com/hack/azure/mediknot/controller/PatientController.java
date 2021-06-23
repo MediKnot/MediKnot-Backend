@@ -91,4 +91,10 @@ public class PatientController {
                 patientMapper.toDto(patient)
         );
     }
+
+    @GetMapping("/share-profile/{id}")
+    public String shareProfile(@PathVariable Integer id, @RequestParam String name, @RequestParam String emailId){
+        patientService.sharePatientProfile(id, name, emailId);
+        return "Shared profile with person having email id: " + emailId;
+    }
 }

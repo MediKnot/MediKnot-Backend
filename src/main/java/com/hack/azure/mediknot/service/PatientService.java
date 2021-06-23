@@ -23,4 +23,6 @@ public interface PatientService {
 
     public Patient getPatientByPhoneNumber(String phoneNumber);
 
+    public void sharePatientProfile(Integer id, String name, String emailId);
+
 }

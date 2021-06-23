@@ -105,4 +105,10 @@ public class PatientServiceImpl implements PatientService{
             throw new PatientException("Patient not found with phone number", 404);
         return patient;
     }
+
+    @Override
+    public void sharePatientProfile(Integer id, String name, String emailId) {
+        String link = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + name + "&email=" + emailId;
+        //email service
+    }
 }
