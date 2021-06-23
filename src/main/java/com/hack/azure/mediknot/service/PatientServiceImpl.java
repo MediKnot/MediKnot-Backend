@@ -1,34 +1,28 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.config.BeanNotNullCopy;
-import com.hack.azure.mediknot.dto.DoctorDto;
-import com.hack.azure.mediknot.dto.PatientDto;
-import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.entity.Patient;
+import com.hack.azure.mediknot.entity.ProfileViews;
 import com.hack.azure.mediknot.entity.Report;
-import com.hack.azure.mediknot.entity.User;
 import com.hack.azure.mediknot.exception.PatientException;
 import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.PatientRepository;
-import org.springframework.beans.BeanUtils;
+import com.hack.azure.mediknot.repository.ProfileViewsRepository;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService{
     private PatientRepository patientRepository;
-    //private Prof
+    private ProfileViewsRepository profileViewsRepository;
 
-    public PatientServiceImpl(PatientRepository patientRepository) {
+    public PatientServiceImpl(PatientRepository patientRepository, ProfileViewsRepository profileViewsRepository) {
         this.patientRepository = patientRepository;
+        this.profileViewsRepository = profileViewsRepository;
     }
 
     @Override
@@ -111,5 +105,22 @@ public class PatientServiceImpl implements PatientService{
     public void sharePatientProfile(Integer id, String name, String emailId) {
         String link = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + name + "&email=" + emailId;
         //email service
+    }
+
+    @Override
+    public ProfileViews addView(Integer id, String name, String email) {
+        Patient patient = getPatientById(id);
+        ProfileViews profileViews = new ProfileViews();
+        profileViews.setPatient(patient);
+        profileViews.setViewersName(name);
+        profileViews.setViewersEmail(email);
+        profileViews.setTimestamp(LocalDateTime.now());
+        return profileViewsRepository.save(profileViews);
+    }
+
+    @Override
+    public List<ProfileViews> getAllViews(Integer id) {
+        Patient patient = getPatientById(id);
+        return profileViewsRepository.findAllByPatient(patient);
     }
 }
