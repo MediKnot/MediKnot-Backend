@@ -25,6 +25,7 @@ import java.util.List;
 @Service
 public class PatientServiceImpl implements PatientService{
     private PatientRepository patientRepository;
+    //private Prof
 
     public PatientServiceImpl(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
