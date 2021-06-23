@@ -23,4 +23,5 @@ public interface PatientService {
 
     public Patient getPatientByPhoneNumber(String phoneNumber);
 
+    public void shareProfile(Integer id, String email);
 }

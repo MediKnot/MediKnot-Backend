@@ -51,6 +51,12 @@ public class PatientController {
         );
     }
 
+    @GetMapping("/share-profile/{id}")
+    public String sharePatientProfile(@PathVariable Integer id, @RequestParam String email){
+        patientService.shareProfile(id, email);
+        return "Your profile is shared with " + email;
+    }
+
     @GetMapping("/phone/{number}")
     public EntityModel<PatientDto> getPatient(@PathVariable String number){
         Patient patient = patientService.getPatientByPhoneNumber(number);

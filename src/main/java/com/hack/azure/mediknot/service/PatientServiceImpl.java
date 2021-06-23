@@ -1,33 +1,25 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.config.BeanNotNullCopy;
-import com.hack.azure.mediknot.dto.DoctorDto;
-import com.hack.azure.mediknot.dto.PatientDto;
-import com.hack.azure.mediknot.entity.Doctor;
 import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Report;
-import com.hack.azure.mediknot.entity.User;
 import com.hack.azure.mediknot.exception.PatientException;
 import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.PatientRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService{
     private PatientRepository patientRepository;
+    private EmailService emailService;
 
-    public PatientServiceImpl(PatientRepository patientRepository) {
+    public PatientServiceImpl(PatientRepository patientRepository, EmailService emailService) {
         this.patientRepository = patientRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -105,4 +97,16 @@ public class PatientServiceImpl implements PatientService{
             throw new PatientException("Patient not found with phone number", 404);
         return patient;
     }
+
+    @Override
+    public void shareProfile(Integer id, String email) {
+        Patient patient = getPatientById(id);
+        String from = "krishnam.rathi@gmail.com";
+        String to = email;
+        String subject = "Patient - " + patient.getName() + " has shared profile!";
+        String profileUrl = "http://20.198.81.29:8080/patient/" + id;
+        String body = "Dear Doctor, \nHope you are safe and fine! \nYou are doing great work \n\nPatient - "+ patient.getName() + "has shared profile, please have a close look by clicking on the link below \n" + profileUrl + "\nThanks and Regards, \nMediKnot";
+        emailService.sendText(from, to, subject, body);
+    }
+
 }
