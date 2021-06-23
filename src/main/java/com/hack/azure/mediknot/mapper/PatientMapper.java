@@ -23,6 +23,7 @@ public interface PatientMapper {
         medicalEventDto.setEndDate(medicalEvent.getEndDate());
         medicalEventDto.setIsActive(medicalEvent.getIsActive());
         medicalEventDto.setCritical(medicalEvent.getCritical().toString());
+        medicalEventDto.setDescription(medicalEvent.getDescription());
         return medicalEventDto;
     }
 
