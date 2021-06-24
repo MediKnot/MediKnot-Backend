@@ -29,4 +29,6 @@ public interface ConsultationService {
 
     public List<Consultation> getConsultationListOfPatient(Integer patientId);
 
+    public Consultation addConsultationToEvent(Integer consultationId, Integer eventId);
+
 }

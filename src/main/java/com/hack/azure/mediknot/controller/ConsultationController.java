@@ -103,4 +103,12 @@ public class ConsultationController {
         List<EntityModel<ConsultationDto>> entityModels = consultations.stream().map(consultation -> EntityModel.of(consultationMapper.toDto(consultation))).collect(Collectors.toList());
         return CollectionModel.of(entityModels);
     }
+
+    @PutMapping("/add-to-event/{eventId}/{consultationId}")
+    public EntityModel<ConsultationDto> addToEvent(@PathVariable Integer eventId, @PathVariable Integer consultationId){
+        Consultation consultation = consultationService.addConsultationToEvent(consultationId, eventId);
+        return EntityModel.of(
+                consultationMapper.toDto(consultation)
+        );
+    }
 }
