@@ -33,6 +33,8 @@ public interface ConsultationMapper {
 //    }
 
     default PatientDto patientToDto(Patient patient){
+        if(patient == null)
+            return null;
         PatientDto patientDto = new PatientDto();
         patientDto.setId(patient.getId());
         patientDto.setName(patient.getName());
