@@ -3,9 +3,9 @@ package com.hack.azure.mediknot.controller;
 import com.hack.azure.mediknot.dto.*;
 import com.hack.azure.mediknot.entity.Consultation;
 import com.hack.azure.mediknot.entity.MedicalEvent;
-import com.hack.azure.mediknot.entity.Report;
 import com.hack.azure.mediknot.entity.Treatment;
 import com.hack.azure.mediknot.mapper.ConsultationMapper;
+import com.hack.azure.mediknot.mapper.MedicalEventMapper;
 import com.hack.azure.mediknot.mapper.TreatmentMapper;
 import com.hack.azure.mediknot.service.ConsultationService;
 import org.springframework.hateoas.CollectionModel;
@@ -26,11 +26,13 @@ public class ConsultationController {
     private ConsultationService consultationService;
     private ConsultationMapper consultationMapper;
     private TreatmentMapper treatmentMapper;
+    private MedicalEventMapper medicalEventMapper;
 
-    public ConsultationController(ConsultationService consultationService, ConsultationMapper consultationMapper, TreatmentMapper treatmentMapper) {
+    public ConsultationController(ConsultationService consultationService, ConsultationMapper consultationMapper, TreatmentMapper treatmentMapper, MedicalEventMapper medicalEventMapper) {
         this.consultationService = consultationService;
         this.consultationMapper = consultationMapper;
         this.treatmentMapper = treatmentMapper;
+        this.medicalEventMapper = medicalEventMapper;
     }
 
     @PostMapping("/{patientId}/{doctorId}")
@@ -105,10 +107,10 @@ public class ConsultationController {
     }
 
     @PutMapping("/add-to-event/{eventId}/{consultationId}")
-    public EntityModel<ConsultationDto> addToEvent(@PathVariable Integer eventId, @PathVariable Integer consultationId){
-        Consultation consultation = consultationService.addConsultationToEvent(consultationId, eventId);
+    public EntityModel<MedicalEventDto> addToEvent(@PathVariable Integer eventId, @PathVariable Integer consultationId){
+        MedicalEvent medicalEvent = consultationService.addConsultationToEvent(consultationId, eventId);
         return EntityModel.of(
-                consultationMapper.toDto(consultation)
+                medicalEventMapper.toDto(medicalEvent)
         );
     }
 }

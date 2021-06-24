@@ -132,12 +132,12 @@ public class ConsultationServiceImpl implements ConsultationService {
     }
 
     @Override
-    public Consultation addConsultationToEvent(Integer consultationId, Integer eventId) {
+    public MedicalEvent addConsultationToEvent(Integer consultationId, Integer eventId) {
         MedicalEvent medicalEvent = medicalEventService.getMedicalEvent(eventId);
         Consultation consultation = getConsultation(consultationId);
         consultation.setPatient(null);
         medicalEvent.getConsultationList().add(consultation);
         medicalEventService.updateMedicalEvent(medicalEvent);
-        return consultation;
+        return medicalEvent;
     }
 }

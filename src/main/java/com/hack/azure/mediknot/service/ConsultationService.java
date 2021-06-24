@@ -1,6 +1,7 @@
 package com.hack.azure.mediknot.service;
 
 import com.hack.azure.mediknot.entity.Consultation;
+import com.hack.azure.mediknot.entity.MedicalEvent;
 import com.hack.azure.mediknot.entity.Treatment;
 
 import java.util.List;
@@ -29,6 +30,6 @@ public interface ConsultationService {
 
     public List<Consultation> getConsultationListOfPatient(Integer patientId);
 
-    public Consultation addConsultationToEvent(Integer consultationId, Integer eventId);
+    public MedicalEvent addConsultationToEvent(Integer consultationId, Integer eventId);
 
 }

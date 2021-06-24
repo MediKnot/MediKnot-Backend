@@ -134,4 +134,5 @@ public class MedicalEventServiceImpl implements MedicalEventService {
         Patient patient = patientService.getPatientById(patientId);
         return medicalEventRepository.findAllByPatient(patient);
     }
+
 }
