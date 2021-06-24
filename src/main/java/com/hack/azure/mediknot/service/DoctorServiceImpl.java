@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -162,18 +163,17 @@ public class DoctorServiceImpl implements DoctorService{
         }
         nearByDoctors.sort(Comparator.comparingDouble(distances::indexOf));
 
-
-
+        nearByDoctors = nearByDoctors.stream().limit(100).collect(Collectors.toList());
+        System.out.println(LocalTime.now());
         if(specialisation!=null){
             resultDoctors = new ArrayList<>();
             for(Doctor doctor:nearByDoctors){
                 int partialRatio = 0;
-
+                String data = "";
                 for(String val:doctor.getSpecialization()){
-                    int currRatio = FuzzySearch.partialRatio(val, specialisation);
-                    partialRatio = Math.max(partialRatio, currRatio);
+                    data = data + val;
                 }
-
+                partialRatio = FuzzySearch.partialRatio(data, specialisation);
                 if(partialRatio>=70){
                     resultDoctors.add(doctor);
                 }
@@ -181,7 +181,7 @@ public class DoctorServiceImpl implements DoctorService{
         }else {
             resultDoctors = nearByDoctors;
         }
-
+        System.out.println(LocalTime.now());
         return resultDoctors.stream().limit(10).collect(Collectors.toList());
     }
 

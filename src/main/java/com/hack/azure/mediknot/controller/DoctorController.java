@@ -110,7 +110,7 @@ public class DoctorController {
     }
 
     @GetMapping("/nearby")
-    public CollectionModel<EntityModel<DoctorDto>> getNearByDoctor(@RequestParam Float lat, @RequestParam Float lon, @RequestParam String specialization, @RequestParam Integer radius){
+    public CollectionModel<EntityModel<DoctorDto>> getNearByDoctor(@RequestParam Float lat, @RequestParam Float lon, @RequestParam(required = false) String specialization, @RequestParam(required = false) Integer radius){
         List<EntityModel<DoctorDto>> result = doctorService.getDoctorsByFilter(lat, lon, specialization, radius).stream().map(
                 doctor -> EntityModel.of(doctorMapper.toDto(doctor),
                         linkTo(methodOn(DoctorController.class).getDoctor(doctor.getId())).withSelfRel())
