@@ -8,6 +8,7 @@ import com.hack.azure.mediknot.exception.UserException;
 import com.hack.azure.mediknot.repository.DoctorRepository;
 import me.xdrop.fuzzywuzzy.FuzzySearch;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,9 @@ import java.util.stream.Collectors;
 public class DoctorServiceImpl implements DoctorService{
 
     private DoctorRepository doctorRepository;
+
+    @Value("${radius}")
+    private Float radius;
 
     public DoctorServiceImpl(DoctorRepository doctorRepository) {
         this.doctorRepository = doctorRepository;
@@ -132,6 +136,56 @@ public class DoctorServiceImpl implements DoctorService{
     }
 
     @Override
+    public List<Doctor> getDoctorsByFilter(Float lat, Float lon, String specialisation, Integer radius) {
+        List<Doctor> allDoctors = getAllDoctors();
+
+        if(radius!=null){
+            this.radius = Float.valueOf(radius);
+        }
+
+        List<Double> distances = new ArrayList<>();
+
+        List<Doctor> nearByDoctors = new ArrayList<>();
+        List<Doctor> resultDoctors;
+
+        for(Doctor doctor:allDoctors){
+
+            if(doctor.getAddress()==null||doctor.getAddress().getLatitude()==null||doctor.getAddress().getLongitude()==null)
+                continue;
+
+            Double distance = calc_distance(lat, lon, doctor.getAddress().getLatitude(), doctor.getAddress().getLongitude(), 'K');
+
+            if(distance <= this.radius){
+                nearByDoctors.add(doctor);
+                distances.add(distance);
+            }
+        }
+        nearByDoctors.sort(Comparator.comparingDouble(distances::indexOf));
+
+
+
+        if(specialisation!=null){
+            resultDoctors = new ArrayList<>();
+            for(Doctor doctor:nearByDoctors){
+                int partialRatio = 0;
+
+                for(String val:doctor.getSpecialization()){
+                    int currRatio = FuzzySearch.partialRatio(val, specialisation);
+                    partialRatio = Math.max(partialRatio, currRatio);
+                }
+
+                if(partialRatio>=70){
+                    resultDoctors.add(doctor);
+                }
+            }
+        }else {
+            resultDoctors = nearByDoctors;
+        }
+
+        return resultDoctors.stream().limit(10).collect(Collectors.toList());
+    }
+
+    @Override
     public Doctor createDoctor(Doctor doctor) throws DoctorException {
         if(doctorRepository.existsByEmailId(doctor.getEmailId())){
             throw new DoctorException("Doctor with email Id exists.", 409);
@@ -172,5 +226,27 @@ public class DoctorServiceImpl implements DoctorService{
         Set<List<Object>> set = new TreeSet<>(comparator);
         set.addAll(list);
         return set.stream().map(pair -> (Doctor)pair.get(0)).limit(k).collect(Collectors.toList());
+    }
+
+    private double calc_distance(double lat1, double lon1, double lat2, double lon2, char unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
 }

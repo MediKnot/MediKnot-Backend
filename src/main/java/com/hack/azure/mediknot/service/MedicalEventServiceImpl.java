@@ -128,4 +128,10 @@ public class MedicalEventServiceImpl implements MedicalEventService {
         medicalEvent.getDiseases().remove(removeDisease);
         return updateMedicalEvent(medicalEvent);
     }
+
+    @Override
+    public List<MedicalEvent> getAllEventsOfPatient(Integer patientId) {
+        Patient patient = patientService.getPatientById(patientId);
+        return medicalEventRepository.findAllByPatient(patient);
+    }
 }

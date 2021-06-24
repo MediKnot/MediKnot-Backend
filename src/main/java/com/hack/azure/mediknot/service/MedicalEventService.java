@@ -26,4 +26,6 @@ public interface MedicalEventService {
     public MedicalEvent addDisease(Integer eventId, Integer diseaseId);
 
     public MedicalEvent removeDisease(Integer eventId, Integer diseaseId);
+
+    public List<MedicalEvent> getAllEventsOfPatient(Integer patientId);
 }

@@ -7,6 +7,7 @@ import com.hack.azure.mediknot.entity.Report;
 import com.hack.azure.mediknot.mapper.MedicalEventMapper;
 import com.hack.azure.mediknot.mapper.ReportMapper;
 import com.hack.azure.mediknot.service.MedicalEventService;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
 
@@ -103,5 +104,17 @@ public class MedicalEventController {
     public String clearReports(@PathVariable Integer id){
         medicalEventService.clearReports(id);
         return "Reports cleared of medicalEvent with id: " + id.toString();
+    }
+
+    @GetMapping("/all/{patientId}")
+    public CollectionModel<EntityModel<MedicalEventDto>> getAllEventsOfPatient(@PathVariable Integer patientId){
+        List<MedicalEvent> medicalEventList = medicalEventService.getAllEventsOfPatient(patientId);
+        List<EntityModel<MedicalEventDto>> entityModels = medicalEventList.stream().map(medicalEvent -> EntityModel.of(
+                medicalEventMapper.toDto(medicalEvent),
+                linkTo(methodOn(MedicalEventController.class).getMedicalEvent(medicalEvent.getId())).withSelfRel()
+        )).collect(Collectors.toList());
+        return CollectionModel.of(
+                entityModels
+        );
     }
 }

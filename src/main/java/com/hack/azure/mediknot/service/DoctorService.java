@@ -26,4 +26,6 @@ public interface DoctorService {
 
     public List<Doctor> getAllDoctors();
 
+    public List<Doctor> getDoctorsByFilter(Float lat, Float lon, String specialisation, Integer radius);
+
 }
