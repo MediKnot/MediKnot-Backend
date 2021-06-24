@@ -11,7 +11,7 @@ import com.hack.azure.mediknot.entity.Patient;
 import com.hack.azure.mediknot.entity.Prescription;
 import org.mapstruct.Mapper;
 
-@Mapper( componentModel = "spring", uses = TreatmentMapper.class)
+@Mapper( componentModel = "spring", uses = {TreatmentMapper.class, PrescriptionMapper.class})
 public interface ConsultationMapper {
 
     Consultation toEntity(ConsultationDto consultationDto);
@@ -25,12 +25,12 @@ public interface ConsultationMapper {
         return doctorDto;
     }
 
-    default PrescriptionDto prescriptionToDto(Prescription prescription){
-        PrescriptionDto prescriptionDto = new PrescriptionDto();
-        prescriptionDto.setId(prescription.getId());
-        prescriptionDto.setDate(prescription.getDate());
-        return prescriptionDto;
-    }
+//    default PrescriptionDto prescriptionToDto(Prescription prescription){
+//        PrescriptionDto prescriptionDto = new PrescriptionDto();
+//        prescriptionDto.setId(prescription.getId());
+//        prescriptionDto.setDate(prescription.getDate());
+//        return prescriptionDto;
+//    }
 
     default PatientDto patientToDto(Patient patient){
         PatientDto patientDto = new PatientDto();
