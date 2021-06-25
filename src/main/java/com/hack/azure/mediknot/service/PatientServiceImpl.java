@@ -11,6 +11,8 @@ import com.hack.azure.mediknot.repository.ProfileViewsRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -107,8 +109,8 @@ public class PatientServiceImpl implements PatientService{
     public void sharePatientProfile(Integer id, String name, String emailId) {
         Patient patient = getPatientById(id);
         String subject = "Patient - " + patient.getName() + " has shared profile!";
-        String link = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + name + "&email=" + emailId;
-        String body = "Dear "+ name + ", \nHope you are safe and fine! \nYou are doing great work \n\nPatient - "+ patient.getName() + "has shared profile, please have a close look by clicking on the link below \n" + link + "\nThanks and Regards, \nMediKnot";
+        String link = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, StandardCharsets.UTF_8) + "&email=" + emailId;
+        String body = "Dear "+ name + ", \nHope you are safe and fine! \nYou are doing great work \n\nPatient - "+ patient.getName() + " has shared profile, please have a close look by clicking on the link below \n" + link + "\nThanks and Regards, \nMediKnot";
         emailService.sendMail(emailId, body, subject);
     }
 
