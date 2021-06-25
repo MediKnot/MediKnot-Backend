@@ -40,4 +40,6 @@ public class Patient extends User{
     @ElementCollection
     private List<Report> generalReports;
 
+    private String meetingLink;
+
 }

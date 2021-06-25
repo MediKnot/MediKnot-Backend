@@ -28,4 +28,6 @@ public class PatientDto extends UserDto {
     private List<String> allergies;
     private List<ReportDto> generalReports;
 
+    private String meetingLink;
+
 }
