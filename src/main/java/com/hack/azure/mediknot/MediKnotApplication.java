@@ -14,6 +14,6 @@ public class MediKnotApplication {
 
 	@Bean
 	public EmailService createEmailBean(){
-		return new EmailService("smtp.gmail.com", 465, "mediknot@gmail.com", "mediknot@ms");
+		return new EmailService("mediknot@gmail.com", "mediknot@ms");
 	}
 }
