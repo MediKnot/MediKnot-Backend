@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.Random;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/file")
 public class FileController {
 
