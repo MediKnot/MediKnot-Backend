@@ -10,8 +10,7 @@ import java.util.List;
 @Setter
 public class ConsultationMedicalEventDto {
     private Integer id;
-    private Integer doctorId;
-    private String name;
+    private DoctorDto doctor;
     private LocalDate consultationDate;
     private List<String> concerns;
     private List<String> notes;

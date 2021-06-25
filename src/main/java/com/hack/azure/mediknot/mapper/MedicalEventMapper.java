@@ -1,13 +1,7 @@
 package com.hack.azure.mediknot.mapper;
 
-import com.hack.azure.mediknot.dto.ConsultationMedicalEventDto;
-import com.hack.azure.mediknot.dto.DiseaseDto;
-import com.hack.azure.mediknot.dto.MedicalEventDto;
-import com.hack.azure.mediknot.dto.PatientDto;
-import com.hack.azure.mediknot.entity.Consultation;
-import com.hack.azure.mediknot.entity.Disease;
-import com.hack.azure.mediknot.entity.MedicalEvent;
-import com.hack.azure.mediknot.entity.Patient;
+import com.hack.azure.mediknot.dto.*;
+import com.hack.azure.mediknot.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -28,8 +22,7 @@ public interface MedicalEventMapper {
     }
 
     @Mapping(source = "consultation.id", target = "id")
-    @Mapping(source = "consultation.doctor.id", target = "doctorId")
-    @Mapping(source = "consultation.doctor.name", target = "name")
+    @Mapping(source = "consultation.doctor", target = "doctor")
     @Mapping(source = "consultation.consultationDate", target = "consultationDate")
     @Mapping(source = "consultation.notes", target = "notes")
     @Mapping(source = "consultation.concerns", target = "concerns")
@@ -40,5 +33,12 @@ public interface MedicalEventMapper {
         diseaseDto.setId(disease.getId());
         diseaseDto.setName(disease.getName());
         return diseaseDto;
+    }
+
+    default DoctorDto doctorToDto(Doctor doctor){
+        DoctorDto doctorDto = new DoctorDto();
+        doctorDto.setId(doctor.getId());
+        doctorDto.setName(doctor.getName());
+        return doctorDto;
     }
 }
