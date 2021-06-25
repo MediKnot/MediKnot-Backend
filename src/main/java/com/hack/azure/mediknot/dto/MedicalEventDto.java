@@ -25,7 +25,7 @@ public class MedicalEventDto {
     private Address location;
 
     private Boolean isActive;
-
+    private String eventName;
     private String critical;
 
     private Set<ConsultationMedicalEventDto> consultationList;
