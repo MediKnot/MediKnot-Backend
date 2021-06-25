@@ -19,10 +19,12 @@ import java.util.List;
 public class PatientServiceImpl implements PatientService{
     private PatientRepository patientRepository;
     private ProfileViewsRepository profileViewsRepository;
+    private EmailService emailService;
 
-    public PatientServiceImpl(PatientRepository patientRepository, ProfileViewsRepository profileViewsRepository) {
+    public PatientServiceImpl(PatientRepository patientRepository, ProfileViewsRepository profileViewsRepository, EmailService emailService) {
         this.patientRepository = patientRepository;
         this.profileViewsRepository = profileViewsRepository;
+        this.emailService = emailService;
     }
 
     @Override
@@ -103,8 +105,11 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public void sharePatientProfile(Integer id, String name, String emailId) {
+        Patient patient = getPatientById(id);
+        String subject = "Patient - " + patient.getName() + " has shared profile!";
         String link = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + name + "&email=" + emailId;
-        //email service
+        String body = "Dear "+ name + ", \nHope you are safe and fine! \nYou are doing great work \n\nPatient - "+ patient.getName() + "has shared profile, please have a close look by clicking on the link below \n" + link + "\nThanks and Regards, \nMediKnot";
+        emailService.sendMail(emailId, body, subject);
     }
 
     @Override

@@ -25,41 +25,79 @@ public class EmailService {
 
     public void sendMail(String toEmailId, String body, String subject) {
 
-        Properties prop = new Properties();
-        prop.put("mail.smtp.auth", true);
-        prop.put("mail.smtp.starttls.enable", "true");
-        prop.put("mail.smtp.host", host);
-        prop.put("mail.smtp.port", port);
-        prop.put("mail.smtp.ssl.trust", host);
+//        Properties prop = new Properties();
+//        prop.put("mail.smtp.host", "smtp.gmail.com");
+//        prop.put("mail.smtp.port", 465);
+//        prop.put("mail.smtp.auth", "true");
+//        prop.put("mail.smtp.socketFactory.port", 465);
+//        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+//
+//        Session session = Session.getInstance(prop,
+//                new javax.mail.Authenticator() {
+//                    protected PasswordAuthentication getPasswordAuthentication() {
+//                        return new PasswordAuthentication("mediknot@gmail.com", "mediknot@ms");
+//                    }
+//                });
+//
+//
+//        try {
+//
+//            Message message = new MimeMessage(session);
+//            message.setFrom(new InternetAddress("mediknot@gmail.com"));
+//            message.setRecipients(
+//                    Message.RecipientType.TO, InternetAddress.parse(toEmailId));
+//            message.setSubject(subject);
+//
+//            String msg = body;
+//
+//            MimeBodyPart mimeBodyPart = new MimeBodyPart();
+//            mimeBodyPart.setContent(msg, "text/html");
+//
+//            Multipart multipart = new MimeMultipart();
+//            multipart.addBodyPart(mimeBodyPart);
+//
+//            message.setContent(multipart);
+//
+//            Transport.send(message);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
-        Session session = Session.getInstance(prop, new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password);
-            }
-        });
+
+        final String username = "mediknot@gmail.com";
+        final String password = "mediknot@ms";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.gmail.com");
+        prop.put("mail.smtp.port", "465");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.socketFactory.port", "465");
+        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+        Session session = Session.getInstance(prop,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
 
         try {
 
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("from@gmail.com"));
+            message.setFrom(new InternetAddress("mediknot@gmail.com"));
             message.setRecipients(
-                    Message.RecipientType.TO, InternetAddress.parse(toEmailId));
-            message.setSubject(subject);
-
-            String msg = body;
-
-            MimeBodyPart mimeBodyPart = new MimeBodyPart();
-            mimeBodyPart.setContent(msg, "text/html");
-
-            Multipart multipart = new MimeMultipart();
-            multipart.addBodyPart(mimeBodyPart);
-
-            message.setContent(multipart);
+                    Message.RecipientType.TO,
+                    InternetAddress.parse("dynamic.malay@gmail.com")
+            );
+            message.setSubject("Testing Gmail SSL");
+            message.setText("Dear Mail Crawler,"
+                    + "\n\n Please do not spam my email!");
 
             Transport.send(message);
 
-        } catch (Exception e) {
+            System.out.println("Done");
+
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
