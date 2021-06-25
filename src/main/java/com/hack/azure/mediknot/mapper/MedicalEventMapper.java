@@ -29,7 +29,7 @@ public interface MedicalEventMapper {
 
     @Mapping(source = "consultation.id", target = "id")
     @Mapping(source = "consultation.doctor.id", target = "doctorId")
-    @Mapping(source = "consultation.doctor.name", target = "doctorName")
+    @Mapping(source = "consultation.doctor.name", target = "name")
     @Mapping(source = "consultation.consultationDate", target = "consultationDate")
     @Mapping(source = "consultation.notes", target = "notes")
     @Mapping(source = "consultation.concerns", target = "concerns")

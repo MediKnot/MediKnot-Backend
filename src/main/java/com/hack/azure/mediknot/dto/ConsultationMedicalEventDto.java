@@ -11,7 +11,7 @@ import java.util.List;
 public class ConsultationMedicalEventDto {
     private Integer id;
     private Integer doctorId;
-    private String doctorName;
+    private String name;
     private LocalDate consultationDate;
     private List<String> concerns;
     private List<String> notes;
