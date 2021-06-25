@@ -30,6 +30,7 @@ public class MedicalEvent {
     private Boolean isActive;
 
     private String description;
+    private String eventName;
 
     @Enumerated(EnumType.STRING)
     private MedicalEventType critical;
