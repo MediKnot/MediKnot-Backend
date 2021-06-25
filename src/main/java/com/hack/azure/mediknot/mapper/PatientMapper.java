@@ -27,6 +27,9 @@ public interface PatientMapper {
         medicalEventDto.setStartDate(medicalEvent.getStartDate());
         medicalEventDto.setEndDate(medicalEvent.getEndDate());
         medicalEventDto.setIsActive(medicalEvent.getIsActive());
+        if(medicalEvent.getEventName()!=null){
+            medicalEventDto.setEventName(medicalEvent.getEventName());
+        }
         medicalEventDto.setCritical(medicalEvent.getCritical().toString());
         medicalEventDto.setDescription(medicalEvent.getDescription());
         medicalEventDto.setDiseases(diseaseSetToDiseaseDtoSet(medicalEvent.getDiseases()));
