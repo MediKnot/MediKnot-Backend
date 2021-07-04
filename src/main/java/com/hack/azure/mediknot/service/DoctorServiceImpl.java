@@ -182,7 +182,7 @@ public class DoctorServiceImpl implements DoctorService{
             resultDoctors = nearByDoctors;
         }
         System.out.println(LocalTime.now());
-        return resultDoctors.stream().limit(10).collect(Collectors.toList());
+        return resultDoctors.stream().limit(50).collect(Collectors.toList());
     }
 
     @Override
