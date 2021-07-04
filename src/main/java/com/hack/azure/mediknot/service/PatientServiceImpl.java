@@ -112,12 +112,12 @@ public class PatientServiceImpl implements PatientService{
         String subject = "Patient - " + patient.getName() + " has shared profile!";
         String link1 = null, link2 = null;
         try {
-            link1 = "http://20.198.81.29/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
-            link2 = "http://mediknot.tech/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
+            link1 = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
+            //link2 = "http://mediknot.tech/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String body = "Dear "+ name + ", \nHope you are safe and fine! \nYou are doing great work \n\nPatient - "+ patient.getName() + " has shared profile, please have a close look by clicking on the link below \n" + link1 + "\n" + link2 + "\nThanks and Regards, \nMediKnot";
+        String body = "Dear "+ name + ", \nHope you are safe and fine! \nYou are doing great work \n\nPatient - "+ patient.getName() + " has shared profile, please have a close look by clicking on the link below \n" + link1 + "\nThanks and Regards, \nMediKnot";
         emailService.sendMail(emailId, body, subject);
     }
 
