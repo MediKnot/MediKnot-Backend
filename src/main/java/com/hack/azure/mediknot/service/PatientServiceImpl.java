@@ -112,7 +112,7 @@ public class PatientServiceImpl implements PatientService{
         String subject = "Patient - " + patient.getName() + " has shared profile!";
         String link1 = null, link2 = null;
         try {
-            link1 = "http://localhost:3000/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
+            link1 = "http://20.198.81.29/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
             //link2 = "http://mediknot.tech/view-profile?patientId=" + id + "&name=" + URLEncoder.encode(name, String.valueOf(StandardCharsets.UTF_8)) + "&email=" + emailId;
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
